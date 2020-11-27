@@ -9,6 +9,9 @@ namespace Follower {
 ObjectFollower::ObjectFollower() : tf_listener_(std::make_unique<tfListener>(tf_buffer_)) {}
 
 auto ObjectFollower::follow() -> void {
+  if (!enable_following_)
+    return;
+
   if (send_tf_instead_)
     sendTfToFollow();
   else

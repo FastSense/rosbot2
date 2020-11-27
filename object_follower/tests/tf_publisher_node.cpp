@@ -47,6 +47,7 @@ int main(int argc, char **argv) {
 
   ROS_INFO("Starting Broadcast");
   tf2::Vector3 pose = {0, 0, 0};
+
   while (ros::ok()) {
     int i = 0;
     for (double angle = angle_min; angle < angle_max; angle += angle_increment) {

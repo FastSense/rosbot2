@@ -1,10 +1,14 @@
 #include "object_follower.hpp"
 #include "ros/init.h"
-#include <ros/ros.h>
+
+#include <ros/service_server.h>
+#include <std_srvs/SetBool.h>
 
 constexpr double NODE_RATE = 10.0;
 
 namespace Follower {
+using Request = std_srvs::SetBool::Request;
+using Response = std_srvs::SetBool::Response;
 
 class ObjectFollowerNode : public ObjectFollower {
 public:
@@ -19,13 +23,25 @@ public:
     pnh_.param<double>("goal_dist_from_obj", goal_dist_from_obj_, 1.0);
 
     pnh_.param<bool>("send_tf_instead", send_tf_instead_, false);
+
+    service_enable_following =
+        nh_.advertiseService("enable_following", &ObjectFollowerNode::enableFollowingCb, this);
   }
-  void sleep() { node_rate_.sleep(); }
+
+  auto sleep() -> void { node_rate_.sleep(); }
+
+  auto enableFollowingCb(Request &req, Response &res) -> bool {
+    enable_following_ = req.data;
+    ROS_INFO("Following set to %d", enable_following_);
+    res.success = true;
+    return true;
+  }
 
 private:
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
   ros::Rate node_rate_;
+  ros::ServiceServer service_enable_following;
 };
 
 } // namespace Follower
@@ -40,6 +56,7 @@ int main(int argc, char **argv) {
 
   while (ros::ok()) {
     node.follow();
+    ros::spinOnce();
     node.sleep();
   }
 }

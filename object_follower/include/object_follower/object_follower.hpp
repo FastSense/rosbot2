@@ -1,3 +1,5 @@
+#pragma once
+
 #include "move_base_msgs/MoveBaseGoal.h"
 #include "ros/time.h"
 #include "tf2_ros/transform_listener.h"
@@ -58,6 +60,7 @@ protected:
   std::string goal_frame_ = "goal_to_follow";
 
   bool send_tf_instead_ = false;
+  bool enable_following_ = true;
 
   ros::Time tf_oldness_ = ros::Time(DEFAULT_OLDNESS);
 
