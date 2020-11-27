@@ -6,25 +6,16 @@ constexpr double SERVER_WAIT_DURATION = 5.0;
 
 namespace Follower {
 
-ObjectFollower::ObjectFollower() : tf_listener_(std::make_unique<tfListener>(tf_buffer_)) {}
+ObjectFollower::ObjectFollower() { tf_listener_ = std::make_unique<tfListener>(tf_buffer_); }
 
 auto ObjectFollower::follow() -> void {
   if (!enable_following_)
     return;
-
-  if (send_tf_instead_)
-    sendTfToFollow();
-  else
-    moveBaseFollow();
-}
-
-auto ObjectFollower::moveBaseFollow() -> void {
   try {
-    checkTf();
-    auto pose_tf = getObjTf();
-    evalTfGoal(pose_tf);
-    sendGoal(tfToGoal(pose_tf));
-    showGoalState();
+    if (send_tf_instead_)
+      sendTfToFollow();
+    else
+      moveBaseFollow();
   } catch (tf2::LookupException &ex) {
     ROS_WARN("Object frame not found: %s", ex.what());
   } catch (tf2::TimeoutException &ex) {
@@ -34,26 +25,23 @@ auto ObjectFollower::moveBaseFollow() -> void {
   } catch (...) {
     ROS_ERROR("Error, can't send goal");
   }
+}
+
+auto ObjectFollower::moveBaseFollow() -> void {
+  checkTf();
+  auto pose_tf = getObjTf();
+  evalTfGoal(pose_tf);
+  sendGoal(tfToGoal(pose_tf));
+  showGoalState();
 }
 
 auto ObjectFollower::sendTfToFollow() -> void {
   static tf2_ros::TransformBroadcaster tf_broacaster;
-
-  try {
-    checkTf();
-    auto pose_tf = getObjTf();
-    evalTfGoal(pose_tf);
-    pose_tf.child_frame_id = goal_frame_;
-    tf_broacaster.sendTransform(pose_tf);
-  } catch (tf2::LookupException &ex) {
-    ROS_WARN("Object frame not found: %s", ex.what());
-  } catch (tf2::TimeoutException &ex) {
-    ROS_WARN("Object frame lookup exceed it's time limit : %s", ex.what());
-  } catch (tf2::ConnectivityException &ex) {
-    ROS_WARN("Object frame not connected to base frame !: %s", ex.what());
-  } catch (...) {
-    ROS_ERROR("Error, can't send goal");
-  }
+  checkTf();
+  auto pose_tf = getObjTf();
+  evalTfGoal(pose_tf);
+  pose_tf.child_frame_id = goal_frame_;
+  tf_broacaster.sendTransform(pose_tf);
 }
 
 auto ObjectFollower::sendGoal(const MoveBaseGoal &goal) noexcept -> void {

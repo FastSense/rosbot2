@@ -49,10 +49,10 @@ private:
 using namespace Follower;
 
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "aruco_detect");
+  ros::init(argc, argv, "object_follower");
   ObjectFollowerNode node;
-
   ROS_INFO("Object Follower Start Working");
+
 
   while (ros::ok()) {
     node.follow();
