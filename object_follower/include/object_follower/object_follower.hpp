@@ -27,10 +27,12 @@ static constexpr int DEFAULT_OLDNESS = 0;
 class ObjectFollower {
 public:
   ObjectFollower();
+  auto follow() -> void;
+
+private:
   auto moveBaseFollow() -> void;
   auto sendTfToFollow() -> void;
 
-private:
   auto sendGoal(const MoveBaseGoal &goal) noexcept -> void;
   auto checkTf() const -> void;
   auto showGoalState() const noexcept -> void;
@@ -54,6 +56,8 @@ protected:
   std::string base_frame_ = "map";
   std::string object_frame_ = "object";
   std::string goal_frame_ = "goal_to_follow";
+
+  bool send_tf_instead_ = false;
 
   ros::Time tf_oldness_ = ros::Time(DEFAULT_OLDNESS);
 

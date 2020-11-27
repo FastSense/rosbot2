@@ -8,6 +8,13 @@ namespace Follower {
 
 ObjectFollower::ObjectFollower() : tf_listener_(std::make_unique<tfListener>(tf_buffer_)) {}
 
+auto ObjectFollower::follow() -> void {
+  if (send_tf_instead_)
+    sendTfToFollow();
+  else
+    moveBaseFollow();
+}
+
 auto ObjectFollower::moveBaseFollow() -> void {
   try {
     checkTf();
