@@ -11,12 +11,6 @@
 
 namespace Follower {
 
-struct RPY {
-  double r;
-  double p;
-  double y;
-};
-
 using tfStamped = geometry_msgs::TransformStamped;
 using PoseStamped = geometry_msgs::PoseStamped;
 using tfListener = tf2_ros::TransformListener;
@@ -27,6 +21,9 @@ using QuaternionTf = tf2::Quaternion;
 using Vector3 = geometry_msgs::Vector3;
 using MoveBaseGoal = move_base_msgs::MoveBaseGoal;
 using MoveBaseClient = actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>;
+
+static constexpr double DEFAULT_OLDNESS = 0.0;
+static constexpr double DEFAULT_WAIT_TIME = 5.0;
 
 class ObjectFollower {
 public:
@@ -47,9 +44,6 @@ private:
   static auto tfToGoal(const tfStamped &pose) -> MoveBaseGoal;
 
 private:
-  static const inline ros::Time tf_oldness_ = ros::Time(0);
-  static const inline ros::Duration tf_wait_ = ros::Duration(5.0);
-
   std::unique_ptr<tfListener> tf_listener_;
   MoveBaseClient move_base_client_ = MoveBaseClient("move_base", true);
 
@@ -59,6 +53,9 @@ private:
 protected:
   std::string base_frame_;
   std::string object_frame_;
+
+  ros::Time tf_oldness_ = ros::Time(DEFAULT_OLDNESS);
+  ros::Duration tf_wait_ = ros::Duration(DEFAULT_WAIT_TIME);
 
   double range_diff_to_set_new_pose_ = 1.0;
   double yaw_diff_to_set_new_pose_ = 20.0;
