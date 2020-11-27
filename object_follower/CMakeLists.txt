@@ -205,8 +205,8 @@ target_link_libraries(object_follower_node
 #############
 ## Testing ##
 #############
-add_executable(test_static_tf_publisher_node tests/static_tf_publisher_node.cpp)
-target_link_libraries(test_static_tf_publisher_node
+add_executable(test_tf_publisher_node tests/tf_publisher_node.cpp)
+target_link_libraries(test_tf_publisher_node
   ${catkin_LIBRARIES}
 )
 
