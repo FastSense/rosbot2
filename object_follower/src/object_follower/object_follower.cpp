@@ -2,7 +2,6 @@
 #include "tf2/LinearMath/Quaternion.h"
 
 constexpr double SERVER_WAIT_DURATION = 5.0;
-constexpr double PI = 3.14159265358979323846;
 
 namespace Follower {
 
@@ -57,8 +56,8 @@ auto ObjectFollower::evalTfGoal(tfStamped &pose) -> void {
   double yaw = getYawFromQuaternion(pose.transform.rotation);
   Vector3 &translation = pose.transform.translation;
 
-  evalTranslationalGoal(translation, yaw);
-  evalRotationalGoal(pose, yaw);
+  setTranslationalGoal(translation, yaw);
+  setRotationalGoal(pose, yaw);
 }
 
 auto ObjectFollower::getYawFromQuaternion(const QuaternionMsg &q) noexcept -> double {
@@ -68,9 +67,9 @@ auto ObjectFollower::getYawFromQuaternion(const QuaternionMsg &q) noexcept -> do
   return yaw;
 }
 
-auto ObjectFollower::evalRotationalGoal(tfStamped &pose, const double yaw) -> void {
+auto ObjectFollower::setRotationalGoal(tfStamped &pose, const double yaw) -> void {
   tf2::Quaternion q;
-  q.setRPY(0, 0, PI + yaw);
+  q.setRPY(0, 0, M_PI + yaw);
 
   pose.transform.rotation.w = q.w();
   pose.transform.rotation.x = q.x();
@@ -78,7 +77,7 @@ auto ObjectFollower::evalRotationalGoal(tfStamped &pose, const double yaw) -> vo
   pose.transform.rotation.z = q.z();
 }
 
-auto ObjectFollower::evalTranslationalGoal(Vector3 &pt, const double yaw) -> void {
+auto ObjectFollower::setTranslationalGoal(Vector3 &pt, const double yaw) -> void {
   const double &r = goal_dist_from_obj_;
   pt.x = pt.x + r * cos(yaw);
   pt.y = pt.y + r * sin(yaw);

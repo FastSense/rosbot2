@@ -34,12 +34,12 @@ private:
   auto sendGoal(const MoveBaseGoal &goal) noexcept -> void;
   auto checkTf() const -> void;
   auto showGoalState() const noexcept -> void;
-  auto evalTranslationalGoal(Vector3 &point, const double yaw) -> void;
+  auto setTranslationalGoal(Vector3 &point, const double yaw) -> void;
 
   auto getObjTf() const -> tfStamped;
   auto evalTfGoal(tfStamped &pose) -> void;
 
-  static auto evalRotationalGoal(tfStamped &pose, const double yaw) -> void;
+  static auto setRotationalGoal(tfStamped &pose, const double yaw) -> void;
   static auto getYawFromQuaternion(const QuaternionMsg &q) noexcept -> double;
   static auto tfToGoal(const tfStamped &pose) -> MoveBaseGoal;
 

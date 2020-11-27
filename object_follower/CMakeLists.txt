@@ -159,6 +159,7 @@ target_link_libraries(object_follower_node
   ${catkin_LIBRARIES}
 )
 
+
 #############
 ## Install ##
 #############
@@ -204,6 +205,10 @@ target_link_libraries(object_follower_node
 #############
 ## Testing ##
 #############
+add_executable(test_static_tf_publisher_node tests/static_tf_publisher_node.cpp)
+target_link_libraries(test_static_tf_publisher_node
+  ${catkin_LIBRARIES}
+)
 
 ## Add gtest based cpp test target and link libraries
 # catkin_add_gtest(${PROJECT_NAME}-test test/test_object_follower.cpp)
