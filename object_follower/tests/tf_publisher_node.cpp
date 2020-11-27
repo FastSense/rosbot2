@@ -34,17 +34,27 @@ int main(int argc, char **argv) {
   ros::init(argc, argv, "tf_broacaster");
   ros::NodeHandle nh;
 
-  tf2::Vector3 pose = {1, 1, 0};
   double angle_min = -M_PI;
-  double angle_max = M_PI ;
+  double angle_max = M_PI;
   double angle_increment = M_PI / 180;
+  double step_count = (angle_max - angle_min) / angle_increment;
+
+  double x_min = 0;
+  double x_max = 3;
+  double x_step = (x_max - x_min) / step_count;
 
   ros::Rate rate = ros::Rate(NODE_RATE);
 
   ROS_INFO("Starting Broadcast");
+  tf2::Vector3 pose = {0, 0, 0};
   while (ros::ok()) {
+    int i = 0;
     for (double angle = angle_min; angle < angle_max; angle += angle_increment) {
-      ROS_INFO("Broadcasting angle: %f", angle);
+      double curr_pose;
+      curr_pose = x_min + x_step * (i++);
+
+      ROS_INFO("Iteration %d. Pose x: %f, Broadcasting angle: %f", i, curr_pose, angle);
+      pose.setX(curr_pose);
       broadcast(pose, angle);
       rate.sleep();
     }

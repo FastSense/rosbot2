@@ -22,13 +22,13 @@ using Vector3 = geometry_msgs::Vector3;
 using MoveBaseGoal = move_base_msgs::MoveBaseGoal;
 using MoveBaseClient = actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>;
 
-static constexpr double DEFAULT_OLDNESS = 0.0;
-static constexpr double DEFAULT_WAIT_TIME = 5.0;
+static constexpr int DEFAULT_OLDNESS = 0;
 
 class ObjectFollower {
 public:
   ObjectFollower();
-  auto follow() -> void;
+  auto moveBaseFollow() -> void;
+  auto sendTfToFollow() -> void;
 
 private:
   auto sendGoal(const MoveBaseGoal &goal) noexcept -> void;
@@ -51,11 +51,11 @@ private:
   tfStamped current_position_;
 
 protected:
-  std::string base_frame_;
-  std::string object_frame_;
+  std::string base_frame_ = "map";
+  std::string object_frame_ = "object";
+  std::string goal_frame_ = "goal_to_follow";
 
   ros::Time tf_oldness_ = ros::Time(DEFAULT_OLDNESS);
-  ros::Duration tf_wait_ = ros::Duration(DEFAULT_WAIT_TIME);
 
   double range_diff_to_set_new_pose_ = 1.0;
   double yaw_diff_to_set_new_pose_ = 20.0;

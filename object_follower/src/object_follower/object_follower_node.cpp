@@ -2,7 +2,7 @@
 #include "ros/init.h"
 #include <ros/ros.h>
 
-constexpr double NODE_RATE = 5.0;
+constexpr double NODE_RATE = 10.0;
 
 namespace Follower {
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
   ROS_INFO("Object Follower Start Working");
 
   while (ros::ok()) {
-    node.follow();
+    node.sendTfToFollow();
     node.sleep();
   }
 }

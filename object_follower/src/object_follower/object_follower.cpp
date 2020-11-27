@@ -1,5 +1,6 @@
 #include "object_follower.hpp"
 #include "tf2/LinearMath/Quaternion.h"
+#include <tf2_ros/transform_broadcaster.h>
 
 constexpr double SERVER_WAIT_DURATION = 5.0;
 
@@ -7,13 +8,33 @@ namespace Follower {
 
 ObjectFollower::ObjectFollower() : tf_listener_(std::make_unique<tfListener>(tf_buffer_)) {}
 
-auto ObjectFollower::follow() -> void {
+auto ObjectFollower::moveBaseFollow() -> void {
   try {
     checkTf();
     auto pose_tf = getObjTf();
     evalTfGoal(pose_tf);
     sendGoal(tfToGoal(pose_tf));
     showGoalState();
+  } catch (tf2::LookupException &ex) {
+    ROS_WARN("Object frame not found: %s", ex.what());
+  } catch (tf2::TimeoutException &ex) {
+    ROS_WARN("Object frame lookup exceed it's time limit : %s", ex.what());
+  } catch (tf2::ConnectivityException &ex) {
+    ROS_WARN("Object frame not connected to base frame !: %s", ex.what());
+  } catch (...) {
+    ROS_ERROR("Error, can't send goal");
+  }
+}
+
+auto ObjectFollower::sendTfToFollow() -> void {
+  static tf2_ros::TransformBroadcaster tf_broacaster;
+
+  try {
+    checkTf();
+    auto pose_tf = getObjTf();
+    evalTfGoal(pose_tf);
+    pose_tf.child_frame_id = goal_frame_;
+    tf_broacaster.sendTransform(pose_tf);
   } catch (tf2::LookupException &ex) {
     ROS_WARN("Object frame not found: %s", ex.what());
   } catch (tf2::TimeoutException &ex) {
@@ -43,12 +64,12 @@ auto ObjectFollower::showGoalState() const noexcept -> void {
 }
 
 auto ObjectFollower::checkTf() const -> void {
-  tf_buffer_.canTransform(base_frame_, object_frame_, tf_oldness_, tf_wait_);
+  tf_buffer_.canTransform(base_frame_, object_frame_, tf_oldness_);
 }
 
 auto ObjectFollower::getObjTf() const -> tfStamped {
   tfStamped tf_pose;
-  tf_pose = tf_buffer_.lookupTransform(base_frame_, object_frame_, tf_oldness_, tf_wait_);
+  tf_pose = tf_buffer_.lookupTransform(base_frame_, object_frame_, tf_oldness_);
   return tf_pose;
 }
 
