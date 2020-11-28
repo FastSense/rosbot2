@@ -1,6 +1,4 @@
 #include "object_follower_move_base.hpp"
-#include "tf2/LinearMath/Quaternion.h"
-#include <tf2_ros/transform_broadcaster.h>
 
 constexpr double SERVER_WAIT_DURATION = 5.0;
 

@@ -1,7 +1,4 @@
 #include "object_follower_tf_broadcaster.hpp"
-#include "tf2/LinearMath/Quaternion.h"
-
-constexpr double SERVER_WAIT_DURATION = 5.0;
 
 namespace Follower {
 
@@ -27,7 +24,8 @@ auto tfBroadcaster::follow() -> void {
   }
 }
 
-auto broadcastTf(const tfStamped &pose) -> void { tf_broadcaster_.sendTransform(pose); }
+auto tfBroadcaster::broadcastTf(const tfStamped &pose) -> void {
+  tf_broadcaster_.sendTransform(pose);
+}
 
 }; // namespace Follower
-

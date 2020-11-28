@@ -1,4 +1,4 @@
-#include "object_follower_move_base.hpp"
+#include "object_follower_2d.hpp"
 
 namespace Follower {
 

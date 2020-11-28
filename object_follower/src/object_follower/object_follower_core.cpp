@@ -1,7 +1,5 @@
 #include "object_follower_core.hpp"
 
-constexpr double SERVER_WAIT_DURATION = 5.0;
-
 namespace Follower {
 
 ObjectFollower::ObjectFollower() { tf_listener_ = std::make_unique<tfListener>(tf_buffer_); }
