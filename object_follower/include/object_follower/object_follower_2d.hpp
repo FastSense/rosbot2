@@ -15,7 +15,6 @@ using QuaternionTf = tf2::Quaternion;
 class ObjectFollower2d : public ObjectFollower {
 public:
   ObjectFollower2d();
-  virtual auto follow() -> void override = 0;
   virtual ~ObjectFollower2d() = default;
 
 protected:

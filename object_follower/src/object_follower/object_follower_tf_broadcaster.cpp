@@ -12,7 +12,7 @@ auto tfBroadcaster::follow() -> void {
     checkTf();
     auto pose_tf = getTf();
     setGoalTf(pose_tf);
-    broadcastTf(pose_tf);
+    broadcast(pose_tf);
   } catch (tf2::LookupException &ex) {
     ROS_WARN("Object frame not found: %s", ex.what());
   } catch (tf2::TimeoutException &ex) {
@@ -24,7 +24,7 @@ auto tfBroadcaster::follow() -> void {
   }
 }
 
-auto tfBroadcaster::broadcastTf(const tfStamped &pose) -> void {
+auto tfBroadcaster::broadcast(const tfStamped &pose) -> void {
   tf_broadcaster_.sendTransform(pose);
 }
 

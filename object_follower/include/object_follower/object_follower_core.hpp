@@ -15,28 +15,31 @@ static constexpr int DEFAULT_OLDNESS = 0;
 class ObjectFollower {
 public:
   ObjectFollower();
-  virtual ~ObjectFollower() = default;
   virtual auto follow() -> void = 0;
+  virtual ~ObjectFollower() = default;
 
 protected:
   auto checkTf() const -> void;
   auto getTf() const -> tfStamped;
 
 protected:
+  ros::Time tf_oldness_ = ros::Time(DEFAULT_OLDNESS);
+
   std::string base_frame_ = "map";
   std::string object_frame_ = "object";
+
   bool enable_following_ = true;
-  ros::Time tf_oldness_ = ros::Time(DEFAULT_OLDNESS);
   double goal_dist_from_obj_ = 1.0;
+
+  double range_diff_to_set_new_pose_ = 1.0;
+  double angle_diff_to_set_new_pose_ = 20.0;
+  double max_dist_to_obj_ = 5.0;
 
 private:
   std::unique_ptr<tfListener> tf_listener_;
   tf2_ros::Buffer tf_buffer_;
   tfStamped current_position_;
 
-  /* double range_diff_to_set_new_pose_ = 1.0; */
-  /* double angle_diff_to_set_new_pose_ = 20.0; */
-  /* double max_dist_to_obj_ = 5.0; */
 };
 
 }; // namespace Follower

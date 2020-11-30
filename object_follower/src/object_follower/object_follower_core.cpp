@@ -1,4 +1,5 @@
 #include "object_follower_core.hpp"
+#include <memory>
 
 namespace Follower {
 
