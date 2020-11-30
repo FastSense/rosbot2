@@ -4,8 +4,6 @@
 
 namespace Follower {
 
-using tfListener = tf2_ros::TransformListener;
-
 class TfBroadcaster : public ObjectFollower2d {
 public:
   TfBroadcaster();

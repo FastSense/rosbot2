@@ -11,7 +11,6 @@ auto TfBroadcaster::follow() -> void {
     return;
 
   try {
-    checkTf();
     auto pose_tf = getTf();
     setGoalTf(pose_tf);
     broadcast(pose_tf);

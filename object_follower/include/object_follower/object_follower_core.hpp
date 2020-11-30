@@ -12,6 +12,7 @@ namespace Follower {
 
 using tfStamped = geometry_msgs::TransformStamped;
 using tfListener = tf2_ros::TransformListener;
+
 using Request = std_srvs::SetBool::Request;
 using Response = std_srvs::SetBool::Response;
 
@@ -44,7 +45,7 @@ protected:
   double angle_diff_to_set_new_pose_ = 20.0;
   double max_dist_to_obj_ = 5.0;
 
-  ros::Time tf_oldness_ = ros::Time(0);
+  ros::Duration tf_wait_ = ros::Duration(1.0);
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
   tfStamped current_position_;

@@ -13,13 +13,10 @@ using MoveBaseClient = actionlib::SimpleActionClient<move_base_msgs::MoveBaseAct
 class MoveBaseFollower : public ObjectFollower2d {
 public:
   MoveBaseFollower();
-
   virtual auto follow() -> void override;
-  
   virtual ~MoveBaseFollower() = default;
 
 private:
-  auto showGoalState() const noexcept -> void;
   auto sendGoal(const MoveBaseGoal &goal) noexcept -> void;
   auto tfToGoal(const tfStamped &pose) -> MoveBaseGoal;
 

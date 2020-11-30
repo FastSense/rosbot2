@@ -151,6 +151,7 @@ include_directories(
    )
 
 add_executable(object_follower_tf_broadcaster_node src/object_follower/object_follower_tf_broadcaster_node.cpp)
+add_executable(object_follower_move_base_node src/object_follower/object_follower_move_base_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -169,6 +170,10 @@ target_link_libraries(object_follower_tf_broadcaster_node
   ${catkin_LIBRARIES}
 )
 
+target_link_libraries(object_follower_move_base_node
+  object_follower_lib
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
@@ -217,7 +222,6 @@ target_link_libraries(object_follower_tf_broadcaster_node
 #############
 add_executable(test_tf_publisher_node tests/tf_publisher_node.cpp)
 target_link_libraries(test_tf_publisher_node
-
   ${catkin_LIBRARIES}
 )
 

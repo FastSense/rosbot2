@@ -2,13 +2,14 @@
 #include <memory>
 
 constexpr double NODE_RATE = 10.0;
+static const inline std::string SERVICE_NAME = "enable_following";
 
 namespace Follower {
 
 ObjectFollower::ObjectFollower() : nh_(), pnh_("~") {
   tf_listener_ = std::make_unique<tfListener>(tf_buffer_);
   service_enable_following =
-      nh_.advertiseService("enable_following", &ObjectFollower::enableFollowingCb, this);
+      nh_.advertiseService(SERVICE_NAME, &ObjectFollower::enableFollowingCb, this);
 
   setParams();
 }
@@ -32,12 +33,17 @@ auto ObjectFollower::enableFollowingCb(Request &req, Response &res) -> bool {
 }
 
 auto ObjectFollower::checkTf() const -> void {
-  tf_buffer_.canTransform(base_frame_, object_frame_, tf_oldness_);
+  static ros::Time tf_oldness_;
+  tf_oldness_ = ros::Time(ros::Time::now());
+
+  tf_buffer_.canTransform(base_frame_, object_frame_, tf_oldness_, tf_wait_);
 }
 
 auto ObjectFollower::getTf() const -> tfStamped {
+  static ros::Time tf_oldness_;
+  tf_oldness_ = ros::Time(ros::Time::now());
   tfStamped tf_pose;
-  tf_pose = tf_buffer_.lookupTransform(base_frame_, object_frame_, tf_oldness_);
+  tf_pose = tf_buffer_.lookupTransform(base_frame_, object_frame_, tf_oldness_, tf_wait_);
   return tf_pose;
 }
 
