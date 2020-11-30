@@ -4,12 +4,12 @@ constexpr double SERVER_WAIT_DURATION = 5.0;
 
 namespace Follower {
 
-MoveBaseFollower::MoveBaseFollower() :  {}
+MoveBaseFollower::MoveBaseFollower() {}
 
 auto MoveBaseFollower::follow() -> void {
   if (!enable_following_)
-  
     return;
+
   try {
     checkTf();
     tfStamped pose = getTf();

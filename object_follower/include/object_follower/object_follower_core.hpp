@@ -5,26 +5,35 @@
 #include <geometry_msgs/TransformStamped.h>
 #include <ros/ros.h>
 
+#include <ros/service_server.h>
+#include <std_srvs/SetBool.h>
+
 namespace Follower {
 
 using tfStamped = geometry_msgs::TransformStamped;
 using tfListener = tf2_ros::TransformListener;
-
-static constexpr int DEFAULT_OLDNESS = 0;
+using Request = std_srvs::SetBool::Request;
+using Response = std_srvs::SetBool::Response;
 
 class ObjectFollower {
 public:
   ObjectFollower();
-  virtual auto follow() -> void = 0;
+  virtual auto start() -> void = 0;
   virtual ~ObjectFollower() = default;
 
 protected:
+  virtual auto follow() -> void = 0;
+  virtual auto sleep() -> void = 0;
+
   auto checkTf() const -> void;
   auto getTf() const -> tfStamped;
 
-protected:
-  ros::Time tf_oldness_ = ros::Time(DEFAULT_OLDNESS);
+  auto enableFollowingCb(Request &req, Response &res) -> bool;
 
+private:
+  auto setParams() -> void;
+
+protected:
   std::string base_frame_ = "map";
   std::string object_frame_ = "object";
 
@@ -35,11 +44,15 @@ protected:
   double angle_diff_to_set_new_pose_ = 20.0;
   double max_dist_to_obj_ = 5.0;
 
+  ros::Time tf_oldness_ = ros::Time(0);
+  ros::NodeHandle nh_;
+  ros::NodeHandle pnh_;
+  tfStamped current_position_;
+
 private:
   std::unique_ptr<tfListener> tf_listener_;
   tf2_ros::Buffer tf_buffer_;
-  tfStamped current_position_;
-
+  ros::ServiceServer service_enable_following;
 };
 
 }; // namespace Follower

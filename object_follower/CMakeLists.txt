@@ -140,7 +140,6 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
  add_library(object_follower_lib 
    src/object_follower/object_follower_core.cpp
-   src/object_follower/object_follower_core.cpp
    src/object_follower/object_follower_2d.cpp
    src/object_follower/object_follower_move_base.cpp
    src/object_follower/object_follower_tf_broadcaster.cpp
@@ -151,7 +150,7 @@ include_directories(
    include/object_follower/object_follower_tf_broadcaster.hpp
    )
 
-add_executable(object_follower_node src/object_follower/object_follower_node.cpp)
+add_executable(object_follower_tf_broadcaster_node src/object_follower/object_follower_tf_broadcaster_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -165,7 +164,7 @@ add_executable(object_follower_node src/object_follower/object_follower_node.cpp
 
 ## Specify libraries to link a library or executable target against
 
-target_link_libraries(object_follower_node
+target_link_libraries(object_follower_tf_broadcaster_node
   object_follower_lib
   ${catkin_LIBRARIES}
 )

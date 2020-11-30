@@ -2,9 +2,11 @@
 
 namespace Follower {
 
-tfBroadcaster::tfBroadcaster() {}
+TfBroadcaster::TfBroadcaster() {
+  pnh_.param<std::string>("goal_frame_", goal_frame_, "goal_to_follow");
+}
 
-auto tfBroadcaster::follow() -> void {
+auto TfBroadcaster::follow() -> void {
   if (!enable_following_)
     return;
 
@@ -24,7 +26,7 @@ auto tfBroadcaster::follow() -> void {
   }
 }
 
-auto tfBroadcaster::broadcast(const tfStamped &pose) -> void {
+auto TfBroadcaster::broadcast(const tfStamped &pose) -> void {
   tf_broadcaster_.sendTransform(pose);
 }
 

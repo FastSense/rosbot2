@@ -6,9 +6,12 @@ namespace Follower {
 
 using tfListener = tf2_ros::TransformListener;
 
-class tfBroadcaster : public ObjectFollower2d {
+class TfBroadcaster : public ObjectFollower2d {
 public:
-  tfBroadcaster();
+  TfBroadcaster();
+  virtual ~TfBroadcaster() = default;
+
+protected:
   virtual auto follow() -> void override;
 
 private:
@@ -16,8 +19,9 @@ private:
 
 private:
   tf2_ros::TransformBroadcaster tf_broadcaster_;
+
 protected:
-   std::string goal_frame_ = "object";
+  std::string goal_frame_ = "goal_frame";
 };
 
 }; // namespace Follower
