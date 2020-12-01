@@ -181,8 +181,8 @@
 },
 {
   "directory": "/home/alex/Media/Develop/Job/rosbot_ws/build/object_follower",
-  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"object_follower\\\" -I/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/include/object_follower -I/home/alex/Media/Develop/Job/rosbot_ws/devel/.private/fastsense_msgs/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp  -g   -std=c++17 -o CMakeFiles/object_follower_tf_broadcaster_node.dir/src/object_follower/object_follower_tf_broadcaster_node.cpp.o -c /home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_tf_broadcaster_node.cpp",
-  "file": "/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_tf_broadcaster_node.cpp"
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"object_follower\\\" -I/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/include/object_follower -I/home/alex/Media/Develop/Job/rosbot_ws/devel/.private/fastsense_msgs/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp  -g   -std=c++17 -o CMakeFiles/object_follower_tf_broadcaster_node.dir/src/object_follower/object_follower_tf_broadcaster_main.cpp.o -c /home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_tf_broadcaster_main.cpp",
+  "file": "/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_tf_broadcaster_main.cpp"
 },
 {
   "directory": "/home/alex/Media/Develop/Job/rosbot_ws/build/object_follower",
@@ -206,8 +206,18 @@
 },
 {
   "directory": "/home/alex/Media/Develop/Job/rosbot_ws/build/object_follower",
-  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"object_follower\\\" -I/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/include/object_follower -I/home/alex/Media/Develop/Job/rosbot_ws/devel/.private/fastsense_msgs/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp  -g   -std=c++17 -o CMakeFiles/object_follower_move_base_node.dir/src/object_follower/object_follower_move_base_node.cpp.o -c /home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_move_base_node.cpp",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"object_follower\\\" -Dobject_follower_lib_EXPORTS -I/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/include/object_follower -I/home/alex/Media/Develop/Job/rosbot_ws/devel/.private/fastsense_msgs/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp  -g -fPIC   -std=c++17 -o CMakeFiles/object_follower_lib.dir/src/object_follower/object_follower_tf_broadcaster_node.cpp.o -c /home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_tf_broadcaster_node.cpp",
+  "file": "/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_tf_broadcaster_node.cpp"
+},
+{
+  "directory": "/home/alex/Media/Develop/Job/rosbot_ws/build/object_follower",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"object_follower\\\" -Dobject_follower_lib_EXPORTS -I/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/include/object_follower -I/home/alex/Media/Develop/Job/rosbot_ws/devel/.private/fastsense_msgs/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp  -g -fPIC   -std=c++17 -o CMakeFiles/object_follower_lib.dir/src/object_follower/object_follower_move_base_node.cpp.o -c /home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_move_base_node.cpp",
   "file": "/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_move_base_node.cpp"
+},
+{
+  "directory": "/home/alex/Media/Develop/Job/rosbot_ws/build/object_follower",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"object_follower\\\" -I/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/include/object_follower -I/home/alex/Media/Develop/Job/rosbot_ws/devel/.private/fastsense_msgs/include -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp  -g   -std=c++17 -o CMakeFiles/object_follower_move_base_node.dir/src/object_follower/object_follower_move_base_main.cpp.o -c /home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_move_base_main.cpp",
+  "file": "/home/alex/Media/Develop/Job/rosbot_ws/src/object_follower/src/object_follower/object_follower_move_base_main.cpp"
 },
 {
   "directory": "/home/alex/Media/Develop/Job/rosbot_ws/build/object_follower",

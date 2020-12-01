@@ -1,5 +1,4 @@
 #include "object_follower_move_base_node.hpp"
-#include "ros/init.h"
 
 constexpr double NODE_RATE = 10.0;
 
@@ -17,13 +16,5 @@ auto MoveBaseFollowerNode::start() -> void {
   }
 }
 
-} // namespace Follower
-
-using namespace Follower;
-
-int main(int argc, char **argv) {
-  ros::init(argc, argv, "object_follower");
-  MoveBaseFollowerNode node;
-  ROS_INFO("Object Follower Start Working");
-  node.start();
 }
+

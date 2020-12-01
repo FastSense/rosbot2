@@ -144,15 +144,17 @@ include_directories(
    src/object_follower/object_follower_2d.cpp
    src/object_follower/object_follower_move_base.cpp
    src/object_follower/object_follower_tf_broadcaster.cpp
+   src/object_follower/object_follower_tf_broadcaster_node.cpp
 
    include/object_follower/object_follower_core.hpp
    include/object_follower/object_follower_2d.hpp
    include/object_follower/object_follower_move_base.hpp
    include/object_follower/object_follower_tf_broadcaster.hpp
+   src/object_follower/object_follower_move_base_node.cpp
    )
 
-add_executable(object_follower_tf_broadcaster_node src/object_follower/object_follower_tf_broadcaster_node.cpp )
-add_executable(object_follower_move_base_node src/object_follower/object_follower_move_base_node.cpp )
+add_executable(object_follower_tf_broadcaster_node src/object_follower/object_follower_tf_broadcaster_main.cpp )
+add_executable(object_follower_move_base_node src/object_follower/object_follower_move_base_main.cpp )
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

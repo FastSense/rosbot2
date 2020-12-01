@@ -6,8 +6,8 @@ namespace Follower {
 class MoveBaseFollowerNode : public MoveBaseFollower {
 public:
   MoveBaseFollowerNode();
-  auto start() -> void override;
-  auto sleep() -> void override;
+  virtual auto start() -> void override;
+  virtual auto sleep() -> void override;
 
   virtual ~MoveBaseFollowerNode() = default;
 
