@@ -10,11 +10,20 @@
 
 namespace Follower {
 
+
 using tfStamped = geometry_msgs::TransformStamped;
 using tfListener = tf2_ros::TransformListener;
 
 using Request = std_srvs::SetBool::Request;
 using Response = std_srvs::SetBool::Response;
+
+using QuaternionTf = tf2::Quaternion;
+using Vector3Tf = tf2::Vector3;
+
+struct PoseTf {
+  Vector3Tf translation;
+  QuaternionTf quaternion;
+};
 
 class ObjectFollower {
 public:
@@ -27,9 +36,14 @@ protected:
   virtual auto sleep() -> void = 0;
 
   auto getTf() const -> tfStamped;
-
   auto enableFollowingCb(Request &req, Response &res) -> bool;
 
+  auto updatePoseIfGood(const tfStamped &pose) -> bool;
+  auto isNewGoalGood(const tfStamped &pose) const -> bool;
+  auto getTfPoseFromMsg(const tfStamped &pose) const -> PoseTf;
+  auto setCurrentPosition(const tfStamped &pose) -> void;
+
+  tfStamped current_position_;
 private:
   auto setParams() -> void;
 
@@ -43,7 +57,7 @@ protected:
   double range_diff_to_set_new_pose_;
   double angle_diff_to_set_new_pose_;
 
-  double tf_wait_value;
+  double tf_wait_value_;
   ros::Duration tf_wait_;
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;

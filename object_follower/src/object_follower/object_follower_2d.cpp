@@ -57,50 +57,6 @@ auto ObjectFollower2d::setGoalTranslation(Vector3 &pt, const double yaw) const -
   pt.z = 0;
 }
 
-auto ObjectFollower2d::getTfPoseFromMsg(const tfStamped &pose) const -> PoseTf {
-  auto t = pose.transform.translation;
-  auto q = pose.transform.rotation;
 
-  Vector3Tf t_tf;
-  QuaternionTf q_tf;
-
-  t_tf.setValue(t.x, t.y, t.z);
-  q_tf.setW(q.w);
-  q_tf.setX(q.x);
-  q_tf.setY(q.y);
-  q_tf.setZ(q.z);
-
-  return PoseTf{t_tf, q_tf};
-}
-
-auto ObjectFollower2d::updatePoseIfGood(const tfStamped &pose) -> bool {
-  if (isNewGoalGood(pose)) {
-    ROS_INFO("New Pose accepted");
-    setCurrentPosition(pose);
-  } else {
-    return false;
-  }
-
-  return true;
-}
-
-auto ObjectFollower2d::setCurrentPosition(const tfStamped &pose) -> void {
-  current_position_ = pose;
-}
-
-auto ObjectFollower2d::isNewGoalGood(const tfStamped &pose) const -> bool {
-  auto [new_position, new_quaternion] = getTfPoseFromMsg(pose);
-  auto [old_position, old_quaternion] = getTfPoseFromMsg(current_position_);
-
-  double dist = tf2::tf2Distance(old_position, new_position);
-  double angle_in_radian = tf2::angle(old_quaternion, new_quaternion);
-  double angle_in_degrees = angle_in_radian * 180.0 / M_PI;
-
-  const double &angle = angle_in_degrees;
-  const double &max_dist = range_diff_to_set_new_pose_;
-  const double &max_angle = angle_diff_to_set_new_pose_;
-
-  return (dist > max_dist || angle > max_angle) ? true : false;
-}
 }; // namespace Follower
 
