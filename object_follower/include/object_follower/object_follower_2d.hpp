@@ -1,8 +1,6 @@
 #pragma once
 #include "object_follower_core.hpp"
 
-#include "tf2/LinearMath/Transform.h"
-#include "tf2/transform_datatypes.h"
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Quaternion.h>
 #include <geometry_msgs/Vector3.h>

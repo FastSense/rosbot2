@@ -1,5 +1,4 @@
 #include "object_follower_move_base.hpp"
-#include <stdexcept>
 
 constexpr double SERVER_WAIT_DURATION = 2.0;
 

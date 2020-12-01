@@ -1,6 +1,4 @@
 #include "object_follower_core.hpp"
-#include "tf2/LinearMath/Vector3.h"
-#include <memory>
 
 constexpr double NODE_RATE = 10.0;
 const inline std::string SERVICE_NAME = "enable_following";

@@ -1,7 +1,5 @@
 #include "object_follower_2d.hpp"
 #include "geometry_msgs/Vector3Stamped.h"
-#include "tf2/LinearMath/Quaternion.h"
-#include <tuple>
 
 namespace Follower {
 

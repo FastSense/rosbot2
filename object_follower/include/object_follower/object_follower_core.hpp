@@ -31,7 +31,6 @@ protected:
   auto enableFollowingCb(Request &req, Response &res) -> bool;
 
 private:
-  auto getDistance() const -> bool;
   auto setParams() -> void;
 
 protected:
