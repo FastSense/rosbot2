@@ -138,6 +138,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
+
  add_library(object_follower_lib 
    src/object_follower/object_follower_core.cpp
    src/object_follower/object_follower_2d.cpp
@@ -150,8 +151,8 @@ include_directories(
    include/object_follower/object_follower_tf_broadcaster.hpp
    )
 
-add_executable(object_follower_tf_broadcaster_node src/object_follower/object_follower_tf_broadcaster_node.cpp)
-add_executable(object_follower_move_base_node src/object_follower/object_follower_move_base_node.cpp)
+add_executable(object_follower_tf_broadcaster_node src/object_follower/object_follower_tf_broadcaster_node.cpp )
+add_executable(object_follower_move_base_node src/object_follower/object_follower_move_base_node.cpp )
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

@@ -1,4 +1,5 @@
 #include "object_follower_move_base.hpp"
+#include <stdexcept>
 
 constexpr double SERVER_WAIT_DURATION = 2.0;
 
@@ -13,6 +14,8 @@ auto MoveBaseFollower::follow() -> void {
   try {
     tfStamped pose = getTf();
     setGoalTf(pose);
+    if (!updatePoseIfGood(pose))
+      return;
     sendGoal(tfToGoal(pose));
   } catch (tf2::LookupException &ex) {
     ROS_WARN("Object frame not found: %s", ex.what());

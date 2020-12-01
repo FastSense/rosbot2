@@ -26,29 +26,28 @@ protected:
   virtual auto follow() -> void = 0;
   virtual auto sleep() -> void = 0;
 
-  auto checkTf() const -> void;
   auto getTf() const -> tfStamped;
 
   auto enableFollowingCb(Request &req, Response &res) -> bool;
 
 private:
+  auto getDistance() const -> bool;
   auto setParams() -> void;
 
 protected:
-  std::string base_frame_ = "map";
-  std::string object_frame_ = "object";
+  std::string base_frame_;
+  std::string object_frame_;
 
   bool enable_following_ = true;
-  double goal_dist_from_obj_ = 1.0;
+  double goal_dist_from_obj_;
 
-  double range_diff_to_set_new_pose_ = 1.0;
-  double angle_diff_to_set_new_pose_ = 20.0;
-  double max_dist_to_obj_ = 5.0;
+  double range_diff_to_set_new_pose_;
+  double angle_diff_to_set_new_pose_;
 
-  ros::Duration tf_wait_ = ros::Duration(1.0);
+  double tf_wait_value;
+  ros::Duration tf_wait_;
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
-  tfStamped current_position_;
 
 private:
   std::unique_ptr<tfListener> tf_listener_;

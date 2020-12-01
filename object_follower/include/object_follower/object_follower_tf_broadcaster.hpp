@@ -13,7 +13,7 @@ protected:
   virtual auto follow() -> void override;
 
 private:
-  auto broadcast(const tfStamped &pose) -> void;
+  auto broadcast(tfStamped &pose) -> void;
 
 private:
   tf2_ros::TransformBroadcaster tf_broadcaster_;

@@ -5,7 +5,7 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_ros/transform_broadcaster.h>
 
-constexpr double NODE_RATE = 50.0;
+constexpr double NODE_RATE = 10.0;
 
 void broadcast(const tf2::Vector3 &pose, double theta) {
 
