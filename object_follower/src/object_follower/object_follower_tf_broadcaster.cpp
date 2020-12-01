@@ -7,7 +7,7 @@ TfBroadcaster::TfBroadcaster() {
 }
 
 auto TfBroadcaster::follow() -> void {
-  if (!enable_following_)
+  if (!following_enabled_)
     return;
 
   try {
@@ -16,18 +16,8 @@ auto TfBroadcaster::follow() -> void {
     if (!updatePoseIfGood(pose_tf))
       return;
     broadcast(pose_tf);
-  } catch (tf2::LookupException &ex) {
-    ROS_WARN("Object frame not found: %s", ex.what());
-  } catch (tf2::TimeoutException &ex) {
-    ROS_WARN("Object frame lookup exceed it's time limit : %s", ex.what());
-  } catch (tf2::ConnectivityException &ex) {
-    ROS_WARN("Object frame not connected to base frame !: %s", ex.what());
-  } catch (tf2::ExtrapolationException &ex) {
-    ROS_WARN("Extrapolation error : %s", ex.what());
-  } catch (ros::Exception &ex) {
-    ROS_WARN("ROS exception caught: %s", ex.what());
   } catch (...) {
-    ROS_ERROR("Unpredictable error, can't send goal");
+    exceptionFilter();
   }
 }
 

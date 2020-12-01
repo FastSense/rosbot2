@@ -1,15 +1,14 @@
 #pragma once
 
 #include "ros/time.h"
-#include "tf2_ros/transform_listener.h"
-#include <geometry_msgs/TransformStamped.h>
 #include <ros/ros.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include "tf2_ros/transform_listener.h"
 
 #include <ros/service_server.h>
 #include <std_srvs/SetBool.h>
 
 namespace Follower {
-
 
 using tfStamped = geometry_msgs::TransformStamped;
 using tfListener = tf2_ros::TransformListener;
@@ -43,7 +42,9 @@ protected:
   auto getTfPoseFromMsg(const tfStamped &pose) const -> PoseTf;
   auto setCurrentPosition(const tfStamped &pose) -> void;
 
+  virtual auto exceptionFilter() const -> void;
   tfStamped current_position_;
+
 private:
   auto setParams() -> void;
 
@@ -51,7 +52,7 @@ protected:
   std::string base_frame_;
   std::string object_frame_;
 
-  bool enable_following_ = true;
+  bool following_enabled_ = true;
   double goal_dist_from_obj_;
 
   double range_diff_to_set_new_pose_;

@@ -15,6 +15,24 @@ ObjectFollower::ObjectFollower() : nh_(), pnh_("~") {
       nh_.advertiseService(SERVICE_NAME, &ObjectFollower::enableFollowingCb, this);
 }
 
+auto ObjectFollower::exceptionFilter() const -> void {
+  try {
+    throw;
+  } catch (tf2::LookupException &ex) {
+    ROS_WARN("Object frame not found: %s", ex.what());
+  } catch (tf2::TimeoutException &ex) {
+    ROS_WARN("Object frame lookup exceed it's time limit : %s", ex.what());
+  } catch (tf2::ConnectivityException &ex) {
+    ROS_WARN("Object frame not connected to base frame !: %s", ex.what());
+  } catch (tf2::ExtrapolationException &ex) {
+    ROS_WARN("Extrapolation error : %s", ex.what());
+  } catch (ros::Exception &ex) {
+    ROS_WARN("ROS exception caught: %s", ex.what());
+  } catch (...) {
+    ROS_ERROR("Unpredictable error, can't send goal");
+  }
+}
+
 auto ObjectFollower::setParams() -> void {
   pnh_.param<std::string>("base_frame", base_frame_, "map");
   pnh_.param<std::string>("object_frame_", object_frame_, "object");
@@ -27,8 +45,8 @@ auto ObjectFollower::setParams() -> void {
 }
 
 auto ObjectFollower::enableFollowingCb(Request &req, Response &res) -> bool {
-  enable_following_ = req.data;
-  ROS_INFO("Following set to %d", enable_following_);
+  following_enabled_ = req.data;
+  ROS_INFO("Following set to %d", following_enabled_);
   res.success = true;
   return true;
 }
@@ -42,17 +60,11 @@ auto ObjectFollower::getTf() const -> tfStamped {
 }
 
 auto ObjectFollower::getTfPoseFromMsg(const tfStamped &pose) const -> PoseTf {
-  auto t = pose.transform.translation;
-  auto q = pose.transform.rotation;
-
   Vector3Tf t_tf;
   QuaternionTf q_tf;
 
-  t_tf.setValue(t.x, t.y, t.z);
-  q_tf.setW(q.w);
-  q_tf.setX(q.x);
-  q_tf.setY(q.y);
-  q_tf.setZ(q.z);
+  tf2::convert(pose.transform.translation, t_tf);
+  tf2::convert(pose.transform.rotation, q_tf);
 
   return PoseTf{t_tf, q_tf};
 }
@@ -83,6 +95,5 @@ auto ObjectFollower::isNewGoalGood(const tfStamped &pose) const -> bool {
 
   return (dist > max_dist || angle > max_angle) ? true : false;
 }
-
 }; // namespace Follower
 
