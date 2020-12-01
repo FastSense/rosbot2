@@ -15,6 +15,7 @@ auto MoveBaseFollower::follow() -> void {
     setGoalTf(pose);
     if (!updatePoseIfGood(pose))
       return;
+
     sendGoal(tfToGoal(pose));
   } catch (tf2::LookupException &ex) {
     ROS_WARN("Object frame not found: %s", ex.what());
@@ -58,5 +59,5 @@ auto MoveBaseFollower::tfToGoal(const tfStamped &pose) -> MoveBaseGoal {
 
   return converted_pose;
 }
-}; // namespace Follower
 
+}; // namespace Follower
