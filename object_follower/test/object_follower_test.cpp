@@ -26,26 +26,18 @@ TEST_F(ObjectFollowerTest, testLookupTf) {
   EXPECT_TRUE(state);
 }
 
-TEST_F(ObjectFollowerTest, testTfGoals) {
-  bool state = false;
-
-  int i = 0;
-  while (i < MAX_ITER_NUM) {
-    try {
-      getTf();
-      state = true;
-      break;
-    } catch (...) {
-      ROS_INFO("Cant get tf: Iteration %d", i);
-    }
-  }
-
-  EXPECT_TRUE(state);
+TEST_F(ObjectFollowerTest, testGoalIsGood) {
+  Follower::tfStamped position;
+  position.transform.translation.x = 0;
+  position.transform.translation.y = 0;
+  position.transform.translation.z = 0;
+  /* current_position_ = */
+  /* EXPECT_TRUE(); */
 }
 
 int main(int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);
-  ros::init(argc, argv, "tester");
-  ros::NodeHandle nh;
+  ros::init(argc, argv, "ObjectFollowerTest");
+
   return RUN_ALL_TESTS();
 }

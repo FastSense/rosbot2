@@ -70,6 +70,11 @@ PoseTf ObjectFollower::getTfPoseFromMsg(const tfStamped &pose) const {
 }
 
 bool ObjectFollower::updatePoseIfGood(const tfStamped &pose) {
+  if (!current_position_.has_value()) {
+    current_position_ = pose;
+    return true;
+  }
+
   bool state = false;
   if ((state = isNewGoalGood(pose))) {
     ROS_INFO("New Pose accepted");
@@ -83,7 +88,7 @@ void ObjectFollower::setCurrentPosition(const tfStamped &pose) { current_positio
 
 bool ObjectFollower::isNewGoalGood(const tfStamped &pose) const {
   auto [new_position, new_quaternion] = getTfPoseFromMsg(pose);
-  auto [old_position, old_quaternion] = getTfPoseFromMsg(current_position_);
+  auto [old_position, old_quaternion] = getTfPoseFromMsg(current_position_.value());
 
   double dist = tf2::tf2Distance(old_position, new_position);
   double angle_in_radian = tf2::angle(old_quaternion, new_quaternion);

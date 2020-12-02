@@ -14,6 +14,7 @@ class MoveBaseFollower : public ObjectFollower2d {
 public:
   MoveBaseFollower();
   void follow() final;
+
   ~MoveBaseFollower() = default;
 
 private:

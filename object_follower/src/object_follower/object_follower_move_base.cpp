@@ -19,9 +19,9 @@ void MoveBaseFollower::follow() {
   } catch (...) {
     exceptionFilter();
   }
-} // namespace Follower
+}
 
- void MoveBaseFollower::sendGoal(const MoveBaseGoal &goal) noexcept {
+void MoveBaseFollower::sendGoal(const MoveBaseGoal &goal) noexcept {
   while (!move_base_client_.waitForServer(ros::Duration(SERVER_WAIT_DURATION))) {
     ROS_WARN("Waiting for the move_base action server to come up");
   }

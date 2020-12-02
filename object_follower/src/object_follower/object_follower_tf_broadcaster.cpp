@@ -13,9 +13,8 @@ void TfBroadcaster::follow() {
   try {
     auto pose_tf = getTf();
     setGoalTf(pose_tf);
-    if (!updatePoseIfGood(pose_tf))
-      return;
-    broadcast(pose_tf);
+    if (updatePoseIfGood(pose_tf))
+      broadcast(pose_tf);
   } catch (...) {
     exceptionFilter();
   }

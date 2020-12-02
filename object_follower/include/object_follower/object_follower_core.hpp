@@ -2,6 +2,7 @@
 
 #include "ros/time.h"
 #include "tf2_ros/transform_listener.h"
+#include <optional>
 #include <ros/ros.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
@@ -43,7 +44,8 @@ protected:
   void setCurrentPosition(const tfStamped &pose);
 
   void exceptionFilter() const;
-  tfStamped current_position_;
+
+  std::optional<tfStamped> current_position_;
 
 private:
   void setParams();

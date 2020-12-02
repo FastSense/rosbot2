@@ -3,17 +3,7 @@
 
 namespace Follower {
 
-ObjectFollower2d::ObjectFollower2d() {
-  bool state = false;
-  while (!state)
-    try {
-      current_position_ = getTf();
-      setGoalTf(current_position_);
-      state = true;
-    } catch (...) {
-      exceptionFilter();
-    }
-}
+ObjectFollower2d::ObjectFollower2d() {}
 
 void ObjectFollower2d::setGoalTf(tfStamped &pose) const {
   double yaw = getYawFromQuaternion(pose.transform.rotation);

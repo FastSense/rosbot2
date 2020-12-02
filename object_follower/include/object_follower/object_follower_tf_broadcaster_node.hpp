@@ -6,8 +6,8 @@ namespace Follower {
 class TfBroadcasterNode : public TfBroadcaster {
 public:
   TfBroadcasterNode();
-   void start() final;
-   void sleep() final;
+  void start() final;
+  void sleep() final;
 
   ~TfBroadcasterNode() = default;
 
