@@ -6,8 +6,8 @@ namespace Follower {
 class MoveBaseFollowerNode : public MoveBaseFollower {
 public:
   MoveBaseFollowerNode();
-  auto start() -> void final;
-  auto sleep() -> void final;
+  void start() final;
+  void sleep() final;
 
   ~MoveBaseFollowerNode() = default;
 

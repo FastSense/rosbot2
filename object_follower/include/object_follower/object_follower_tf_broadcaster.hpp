@@ -10,10 +10,10 @@ public:
   ~TfBroadcaster() = default;
 
 protected:
-  auto follow() -> void final;
+  void follow() final;
 
 private:
-  auto broadcast(tfStamped &pose) -> void;
+  void broadcast(tfStamped &pose);
 
 private:
   tf2_ros::TransformBroadcaster tf_broadcaster_;

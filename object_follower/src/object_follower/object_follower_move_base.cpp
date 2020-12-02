@@ -6,7 +6,7 @@ namespace Follower {
 
 MoveBaseFollower::MoveBaseFollower() {}
 
-auto MoveBaseFollower::follow() -> void {
+void MoveBaseFollower::follow() {
   if (!following_enabled_)
     return;
 
@@ -21,7 +21,7 @@ auto MoveBaseFollower::follow() -> void {
   }
 } // namespace Follower
 
-auto MoveBaseFollower::sendGoal(const MoveBaseGoal &goal) noexcept -> void {
+ void MoveBaseFollower::sendGoal(const MoveBaseGoal &goal) noexcept {
   while (!move_base_client_.waitForServer(ros::Duration(SERVER_WAIT_DURATION))) {
     ROS_WARN("Waiting for the move_base action server to come up");
   }
@@ -30,7 +30,7 @@ auto MoveBaseFollower::sendGoal(const MoveBaseGoal &goal) noexcept -> void {
   move_base_client_.sendGoal(goal);
 }
 
-auto MoveBaseFollower::tfToGoal(const tfStamped &pose) -> MoveBaseGoal {
+MoveBaseGoal MoveBaseFollower::tfToGoal(const tfStamped &pose) {
   MoveBaseGoal converted_pose;
 
   converted_pose.target_pose.pose.orientation.w = pose.transform.rotation.w;

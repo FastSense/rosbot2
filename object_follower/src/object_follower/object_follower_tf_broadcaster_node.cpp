@@ -6,9 +6,9 @@ namespace Follower {
 
 TfBroadcasterNode::TfBroadcasterNode() : node_rate_(NODE_RATE) {}
 
-auto TfBroadcasterNode::sleep() -> void { node_rate_.sleep(); }
+void TfBroadcasterNode::sleep() { node_rate_.sleep(); }
 
-auto TfBroadcasterNode::start() -> void {
+void TfBroadcasterNode::start() {
   while (ros::ok()) {
     follow();
     ros::spinOnce();

@@ -27,26 +27,26 @@ struct PoseTf {
 class ObjectFollower {
 public:
   ObjectFollower();
-  virtual auto start() -> void = 0;
+  virtual void start() = 0;
   ~ObjectFollower() = default;
 
 protected:
-  virtual auto follow() -> void = 0;
-  virtual auto sleep() -> void = 0;
+  virtual void follow() = 0;
+  virtual void sleep() = 0;
 
-  auto getTf() const -> tfStamped;
-  auto enableFollowingCb(Request &req, Response &res) -> bool;
+  tfStamped getTf() const;
+  bool enableFollowingCb(Request &req, Response &res);
 
-  auto updatePoseIfGood(const tfStamped &pose) -> bool;
-  auto isNewGoalGood(const tfStamped &pose) const -> bool;
-  auto getTfPoseFromMsg(const tfStamped &pose) const -> PoseTf;
-  auto setCurrentPosition(const tfStamped &pose) -> void;
+  bool updatePoseIfGood(const tfStamped &pose);
+  bool isNewGoalGood(const tfStamped &pose) const;
+  PoseTf getTfPoseFromMsg(const tfStamped &pose) const;
+  void setCurrentPosition(const tfStamped &pose);
 
-  auto exceptionFilter() const -> void;
+  void exceptionFilter() const;
   tfStamped current_position_;
 
 private:
-  auto setParams() -> void;
+  void setParams();
 
 protected:
   std::string base_frame_;

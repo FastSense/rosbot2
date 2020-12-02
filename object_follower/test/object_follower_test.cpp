@@ -1,25 +1,46 @@
+#include "object_follower_tf_broadcaster_node.hpp"
 #include <gtest/gtest.h>
 #include <ros/ros.h>
-#include <stdexcept>
 
-TEST(TestSuite, testCase1) { ASSERT_EQ(1, 2); }
+constexpr size_t MAX_ITER_NUM = 10;
 
-TEST(TestSuite, testCase2) { ASSERT_EQ(2, 2); }
+class ObjectFollowerTest : public ::testing::Test, public Follower::TfBroadcasterNode {
+protected:
+  void SetUp() override {}
+  void TearDown() override {}
+};
 
-TEST(TestSuite, testCase3) {
-  try {
-    throw std::runtime_error("runtime_error");
-  } catch (...) {
-    ADD_FAILURE() << "LINE OF CATCH WITH ADD FAILURE";
+TEST_F(ObjectFollowerTest, testLookupTf) {
+  bool state = false;
+
+  int i = 0;
+  while (i < MAX_ITER_NUM) {
+    try {
+      getTf();
+      state = true;
+      break;
+    } catch (...) {
+      ROS_INFO("Cant get tf: Iteration %d", i);
+    }
   }
+  EXPECT_TRUE(state);
 }
 
-TEST(TestSuite, testCase4) {
-  try {
-    throw std::runtime_error("runtime_error");
-  } catch (...) {
-    FAIL() << "LINE OF CATCH WITH FAIL";
+TEST_F(ObjectFollowerTest, testTfGoals) {
+  bool state = false;
+
+  int i = 0;
+  while (i < MAX_ITER_NUM) {
+    try {
+      getTf();
+      state = true;
+      break;
+    } catch (...) {
+      ROS_INFO("Cant get tf: Iteration %d", i);
+    }
   }
+
+  EXPECT_TRUE(state);
 }
 
 int main(int argc, char **argv) {

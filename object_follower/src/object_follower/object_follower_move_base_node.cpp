@@ -6,9 +6,9 @@ namespace Follower {
 
 MoveBaseFollowerNode::MoveBaseFollowerNode() : node_rate_(NODE_RATE) {}
 
-auto MoveBaseFollowerNode::sleep() -> void { node_rate_.sleep(); }
+void MoveBaseFollowerNode::sleep() { node_rate_.sleep(); }
 
-auto MoveBaseFollowerNode::start() -> void {
+void MoveBaseFollowerNode::start() {
   while (ros::ok()) {
     follow();
     ros::spinOnce();

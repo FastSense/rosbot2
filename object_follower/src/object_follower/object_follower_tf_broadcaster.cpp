@@ -6,7 +6,7 @@ TfBroadcaster::TfBroadcaster() {
   pnh_.param<std::string>("goal_frame_", goal_frame_, "goal_to_follow");
 }
 
-auto TfBroadcaster::follow() -> void {
+void TfBroadcaster::follow() {
   if (!following_enabled_)
     return;
 
@@ -21,7 +21,7 @@ auto TfBroadcaster::follow() -> void {
   }
 }
 
-auto TfBroadcaster::broadcast(tfStamped &pose) -> void {
+void TfBroadcaster::broadcast(tfStamped &pose) {
   pose.child_frame_id = goal_frame_;
   tf_broadcaster_.sendTransform(pose);
 }

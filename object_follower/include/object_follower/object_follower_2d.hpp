@@ -17,12 +17,12 @@ public:
   ~ObjectFollower2d() = default;
 
 protected:
-  auto setGoalTf(tfStamped &pose) const -> void;
+  void setGoalTf(tfStamped &pose) const;
 
-  auto setGoalTranslation(Vector3 &point, const double yaw) const -> void;
-  auto setGoalRotation(tfStamped &pose, const double yaw) const -> void;
+  void setGoalTranslation(Vector3 &point, const double yaw) const;
+  void setGoalRotation(tfStamped &pose, const double yaw) const;
 
-  auto getYawFromQuaternion(const Quaternion &q) const noexcept -> double;
+  double getYawFromQuaternion(const Quaternion &q) const noexcept;
 };
 
 }; // namespace Follower

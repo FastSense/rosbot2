@@ -15,7 +15,7 @@ ObjectFollower::ObjectFollower() : nh_(), pnh_("~") {
       pnh_.advertiseService(SERVICE_NAME, &ObjectFollower::enableFollowingCb, this);
 }
 
-auto ObjectFollower::exceptionFilter() const -> void {
+void ObjectFollower::exceptionFilter() const {
   try {
     throw;
   } catch (tf2::LookupException &ex) {
@@ -33,7 +33,7 @@ auto ObjectFollower::exceptionFilter() const -> void {
   }
 }
 
-auto ObjectFollower::setParams() -> void {
+void ObjectFollower::setParams() {
   pnh_.param<std::string>("base_frame", base_frame_, "map");
   pnh_.param<std::string>("object_frame_", object_frame_, "object");
 
@@ -44,14 +44,14 @@ auto ObjectFollower::setParams() -> void {
   pnh_.param<double>("goal_dist_from_obj", goal_dist_from_obj_, 1.0);
 }
 
-auto ObjectFollower::enableFollowingCb(Request &req, Response &res) -> bool {
+bool ObjectFollower::enableFollowingCb(Request &req, Response &res) {
   following_enabled_ = req.data;
   ROS_INFO("Following set to %d", following_enabled_);
   res.success = true;
   return true;
 }
 
-auto ObjectFollower::getTf() const -> tfStamped {
+tfStamped ObjectFollower::getTf() const {
   static ros::Time tf_oldness_;
   tf_oldness_ = ros::Time(ros::Time::now());
   tfStamped tf_pose;
@@ -59,7 +59,7 @@ auto ObjectFollower::getTf() const -> tfStamped {
   return tf_pose;
 }
 
-auto ObjectFollower::getTfPoseFromMsg(const tfStamped &pose) const -> PoseTf {
+PoseTf ObjectFollower::getTfPoseFromMsg(const tfStamped &pose) const {
   Vector3Tf t_tf;
   QuaternionTf q_tf;
 
@@ -69,7 +69,7 @@ auto ObjectFollower::getTfPoseFromMsg(const tfStamped &pose) const -> PoseTf {
   return PoseTf{t_tf, q_tf};
 }
 
-auto ObjectFollower::updatePoseIfGood(const tfStamped &pose) -> bool {
+bool ObjectFollower::updatePoseIfGood(const tfStamped &pose) {
   bool state = false;
   if ((state = isNewGoalGood(pose))) {
     ROS_INFO("New Pose accepted");
@@ -79,9 +79,9 @@ auto ObjectFollower::updatePoseIfGood(const tfStamped &pose) -> bool {
   return state;
 }
 
-auto ObjectFollower::setCurrentPosition(const tfStamped &pose) -> void { current_position_ = pose; }
+void ObjectFollower::setCurrentPosition(const tfStamped &pose) { current_position_ = pose; }
 
-auto ObjectFollower::isNewGoalGood(const tfStamped &pose) const -> bool {
+bool ObjectFollower::isNewGoalGood(const tfStamped &pose) const {
   auto [new_position, new_quaternion] = getTfPoseFromMsg(pose);
   auto [old_position, old_quaternion] = getTfPoseFromMsg(current_position_);
 
