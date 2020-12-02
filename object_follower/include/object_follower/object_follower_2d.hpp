@@ -14,7 +14,7 @@ using Quaternion = geometry_msgs::Quaternion;
 class ObjectFollower2d : public ObjectFollower {
 public:
   ObjectFollower2d();
-  virtual ~ObjectFollower2d() = default;
+  ~ObjectFollower2d() = default;
 
 protected:
   auto setGoalTf(tfStamped &pose) const -> void;

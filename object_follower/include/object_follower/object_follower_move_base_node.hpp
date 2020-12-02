@@ -6,10 +6,10 @@ namespace Follower {
 class MoveBaseFollowerNode : public MoveBaseFollower {
 public:
   MoveBaseFollowerNode();
-  virtual auto start() -> void override;
-  virtual auto sleep() -> void override;
+  auto start() -> void final;
+  auto sleep() -> void final;
 
-  virtual ~MoveBaseFollowerNode() = default;
+  ~MoveBaseFollowerNode() = default;
 
 private:
   ros::Rate node_rate_;

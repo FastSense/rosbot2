@@ -6,10 +6,10 @@ namespace Follower {
 class TfBroadcasterNode : public TfBroadcaster {
 public:
   TfBroadcasterNode();
-  virtual auto start() -> void override;
-  virtual auto sleep() -> void override;
+   auto start() -> void final;
+   auto sleep() -> void final;
 
-  virtual ~TfBroadcasterNode() = default;
+  ~TfBroadcasterNode() = default;
 
 private:
   ros::Rate node_rate_;

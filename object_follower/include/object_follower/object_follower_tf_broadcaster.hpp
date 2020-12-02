@@ -7,10 +7,10 @@ namespace Follower {
 class TfBroadcaster : public ObjectFollower2d {
 public:
   TfBroadcaster();
-  virtual ~TfBroadcaster() = default;
+  ~TfBroadcaster() = default;
 
 protected:
-  virtual auto follow() -> void override;
+  auto follow() -> void final;
 
 private:
   auto broadcast(tfStamped &pose) -> void;

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "ros/time.h"
+#include "tf2_ros/transform_listener.h"
 #include <ros/ros.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
-#include "tf2_ros/transform_listener.h"
 
 #include <ros/service_server.h>
 #include <std_srvs/SetBool.h>
@@ -28,7 +28,7 @@ class ObjectFollower {
 public:
   ObjectFollower();
   virtual auto start() -> void = 0;
-  virtual ~ObjectFollower() = default;
+  ~ObjectFollower() = default;
 
 protected:
   virtual auto follow() -> void = 0;
@@ -42,7 +42,7 @@ protected:
   auto getTfPoseFromMsg(const tfStamped &pose) const -> PoseTf;
   auto setCurrentPosition(const tfStamped &pose) -> void;
 
-  virtual auto exceptionFilter() const -> void;
+  auto exceptionFilter() const -> void;
   tfStamped current_position_;
 
 private:
