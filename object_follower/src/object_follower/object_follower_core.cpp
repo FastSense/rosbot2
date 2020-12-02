@@ -12,7 +12,7 @@ ObjectFollower::ObjectFollower() : nh_(), pnh_("~") {
   tf_wait_ = ros::Duration(tf_wait_value_);
 
   service_enable_following =
-      nh_.advertiseService(SERVICE_NAME, &ObjectFollower::enableFollowingCb, this);
+      pnh_.advertiseService(SERVICE_NAME, &ObjectFollower::enableFollowingCb, this);
 }
 
 auto ObjectFollower::exceptionFilter() const -> void {
@@ -95,5 +95,6 @@ auto ObjectFollower::isNewGoalGood(const tfStamped &pose) const -> bool {
 
   return (dist > max_dist || angle > max_angle) ? true : false;
 }
+
 }; // namespace Follower
 

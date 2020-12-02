@@ -16,5 +16,5 @@ auto MoveBaseFollowerNode::start() -> void {
   }
 }
 
-}
+} // namespace Follower
 

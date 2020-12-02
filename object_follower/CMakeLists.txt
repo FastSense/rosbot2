@@ -13,7 +13,6 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   tf
-  fastsense_msgs
   actionlib
   move_base_msgs
 )
@@ -223,17 +222,18 @@ target_link_libraries(object_follower_move_base_node
 #############
 ## Testing ##
 #############
-add_executable(test_tf_publisher_node tests/tf_publisher_node.cpp)
+add_executable(test_tf_publisher_node test/tf_publisher_node.cpp)
 target_link_libraries(test_tf_publisher_node
   ${catkin_LIBRARIES}
 )
 
-
+catkin_add_gtest(object_follower_test test/object_follower_test.cpp)
 ## Add gtest based cpp test target and link libraries
 # catkin_add_gtest(${PROJECT_NAME}-test test/test_object_follower.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
+if(TARGET object_follower_test)
+  target_link_libraries(object_follower_test 
+    ${catkin_LIBRARIES})
+endif()
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
