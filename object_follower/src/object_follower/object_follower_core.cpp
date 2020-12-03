@@ -38,7 +38,7 @@ void ObjectFollower::setParams() {
   pnh_.param<std::string>("object_frame_", object_frame_, "object");
 
   pnh_.param<double>("range_diff_to_set_new_pose", range_diff_to_set_new_pose_, 0.2);
-  pnh_.param<double>("yaw_diff_to_set_new_pose", angle_diff_to_set_new_pose_, 40.0);
+  pnh_.param<double>("yaw_diff_to_set_new_pose", angle_diff_to_set_new_pose_, 15.0);
 
   pnh_.param<double>("tf_wait", tf_wait_value_, 1.0);
   pnh_.param<double>("goal_dist_from_obj", goal_dist_from_obj_, 1.0);
@@ -52,10 +52,10 @@ bool ObjectFollower::enableFollowingCb(Request &req, Response &res) {
 }
 
 tfStamped ObjectFollower::getTf() const {
-  static ros::Time tf_oldness_;
-  tf_oldness_ = ros::Time(ros::Time::now());
+  static ros::Time tf_oldness;
+  tf_oldness = ros::Time(ros::Time::now());
   tfStamped tf_pose;
-  tf_pose = tf_buffer_.lookupTransform(base_frame_, object_frame_, tf_oldness_, tf_wait_);
+  tf_pose = tf_buffer_.lookupTransform(base_frame_, object_frame_, tf_oldness, tf_wait_);
   return tf_pose;
 }
 

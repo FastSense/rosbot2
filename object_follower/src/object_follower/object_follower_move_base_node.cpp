@@ -10,7 +10,12 @@ void MoveBaseFollowerNode::sleep() { node_rate_.sleep(); }
 
 void MoveBaseFollowerNode::start() {
   while (ros::ok()) {
-    follow();
+    try {
+      follow();
+    } catch (...) {
+      exceptionFilter();
+    }
+
     ros::spinOnce();
     sleep();
   }

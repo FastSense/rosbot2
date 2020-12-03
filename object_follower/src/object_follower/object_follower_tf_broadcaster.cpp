@@ -10,14 +10,10 @@ void TfBroadcaster::follow() {
   if (!following_enabled_)
     return;
 
-  try {
-    auto pose_tf = getTf();
-    setGoalTf(pose_tf);
-    if (updatePoseIfGood(pose_tf))
-      broadcast(pose_tf);
-  } catch (...) {
-    exceptionFilter();
-  }
+  auto pose_tf = getTf();
+  setGoalTf(pose_tf);
+  if (updatePoseIfGood(pose_tf))
+    broadcast(pose_tf);
 }
 
 void TfBroadcaster::broadcast(tfStamped &pose) {

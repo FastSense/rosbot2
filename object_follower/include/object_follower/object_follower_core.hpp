@@ -65,9 +65,9 @@ protected:
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
 
-private:
   std::unique_ptr<tfListener> tf_listener_;
   tf2_ros::Buffer tf_buffer_;
+private:
   ros::ServiceServer service_enable_following;
 };
 

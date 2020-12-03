@@ -10,7 +10,12 @@ void TfBroadcasterNode::sleep() { node_rate_.sleep(); }
 
 void TfBroadcasterNode::start() {
   while (ros::ok()) {
-    follow();
+    try {
+      follow();
+    } catch (...) {
+      exceptionFilter();
+    }
+
     ros::spinOnce();
     sleep();
   }

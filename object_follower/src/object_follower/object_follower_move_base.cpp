@@ -10,15 +10,11 @@ void MoveBaseFollower::follow() {
   if (!following_enabled_)
     return;
 
-  try {
-    tfStamped pose = getTf();
-    setGoalTf(pose);
-    if (!updatePoseIfGood(pose))
-      return;
-    sendGoal(tfToGoal(pose));
-  } catch (...) {
-    exceptionFilter();
-  }
+  tfStamped pose = getTf();
+  setGoalTf(pose);
+  if (!updatePoseIfGood(pose))
+    return;
+  sendGoal(tfToGoal(pose));
 }
 
 void MoveBaseFollower::sendGoal(const MoveBaseGoal &goal) noexcept {
