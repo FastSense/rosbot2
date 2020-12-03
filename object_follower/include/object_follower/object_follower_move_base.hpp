@@ -10,15 +10,22 @@ namespace Follower {
 using MoveBaseGoal = move_base_msgs::MoveBaseGoal;
 using MoveBaseClient = actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>;
 
+/**
+ * @brief Abstract Class extending ObjectFollower2d class with methods for sending goals to
+ * move_base
+ */
 class MoveBaseFollower : public ObjectFollower2d {
 public:
   MoveBaseFollower();
+  /**
+   * Implementation of follow method
+   */
   void follow() final;
 
   ~MoveBaseFollower() = default;
 
 private:
-  void sendGoal(const MoveBaseGoal &goal) noexcept;
+  void sendGoal(const MoveBaseGoal &goal);
   MoveBaseGoal tfToGoal(const tfStamped &pose);
 
 private:

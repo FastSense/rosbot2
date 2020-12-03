@@ -3,6 +3,9 @@
 
 namespace Follower {
 
+/**
+ * @brief Implementation of MoveBaseFollower abstract class
+ */
 class MoveBaseFollowerNode : public MoveBaseFollower {
 public:
   MoveBaseFollowerNode();

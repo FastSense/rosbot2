@@ -4,6 +4,7 @@
 
 namespace Follower {
 
+/// Abstract Class extending ObjectFollower2d class with methods for broadcasting Tf
 class TfBroadcaster : public ObjectFollower2d {
 public:
   TfBroadcaster();
