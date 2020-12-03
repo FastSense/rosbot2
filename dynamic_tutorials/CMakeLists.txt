@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(object_follower LANGUAGES CXX)
+project(dynamic_tutorials)
 
-add_definitions(-std=c++17)
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
@@ -9,19 +8,11 @@ add_definitions(-std=c++17)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  dynamic_reconfigure
   roscpp
   rospy
-  std_msgs
-  tf
-  actionlib
-  move_base_msgs
-  dynamic_reconfigure
 )
 
-find_package(rostest REQUIRED)
-find_package(gtest)
-
-generate_dynamic_reconfigure_options(cfg/ObjectFollower.cfg)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -79,7 +70,7 @@ generate_dynamic_reconfigure_options(cfg/ObjectFollower.cfg)
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   std_msgs
+#   std_msgs  # Or other packages containing msgs
 # )
 
 ################################################
@@ -113,8 +104,8 @@ generate_dynamic_reconfigure_options(cfg/ObjectFollower.cfg)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES object_follower
-#  CATKIN_DEPENDS roscpp rospy std_msgs tf
+#  LIBRARIES dynamic_tutorials
+#  CATKIN_DEPENDS dynamic_reconfigure roscpp rospy
 #  DEPENDS system_lib
 )
 
@@ -125,13 +116,13 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include/object_follower
+# include
   ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/object_follower.cpp
+#   src/${PROJECT_NAME}/dynamic_tutorials.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -142,26 +133,8 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
+# add_executable(${PROJECT_NAME}_node src/dynamic_tutorials_node.cpp)
 
- add_library(object_follower_lib 
-   src/object_follower/object_follower_core.cpp
-   src/object_follower/object_follower_2d.cpp
-   src/object_follower/object_follower_move_base.cpp
-   src/object_follower/object_follower_tf_broadcaster.cpp
-   src/object_follower/object_follower_tf_broadcaster_node.cpp
-
-   include/object_follower/object_follower_core.hpp
-   include/object_follower/object_follower_2d.hpp
-   include/object_follower/object_follower_move_base.hpp
-   include/object_follower/object_follower_tf_broadcaster.hpp
-   src/object_follower/object_follower_move_base_node.cpp
-   )
-
-add_executable(object_follower_tf_broadcaster_node src/object_follower/object_follower_tf_broadcaster_main.cpp )
-add_executable(object_follower_move_base_node src/object_follower/object_follower_move_base_main.cpp )
-
-add_dependencies(object_follower_tf_broadcaster_node ${PROJECT_NAME}_gencfg)
-add_dependencies(object_follower_move_base_node ${PROJECT_NAME}_gencfg)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -173,16 +146,9 @@ add_dependencies(object_follower_move_base_node ${PROJECT_NAME}_gencfg)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-
-target_link_libraries(object_follower_tf_broadcaster_node
-  object_follower_lib
-  ${catkin_LIBRARIES}
-)
-
-target_link_libraries(object_follower_move_base_node
-  object_follower_lib
-  ${catkin_LIBRARIES}
-)
+# target_link_libraries(${PROJECT_NAME}_node
+#   ${catkin_LIBRARIES}
+# )
 
 #############
 ## Install ##
@@ -229,24 +195,12 @@ target_link_libraries(object_follower_move_base_node
 #############
 ## Testing ##
 #############
-add_executable(test_tf_publisher_node test/tf_publisher_node.cpp)
-target_link_libraries(test_tf_publisher_node
-  ${catkin_LIBRARIES}
-)
-
-# catkin_add_gtest(object_follower_test test/object_follower_test.cpp )
-
-add_rostest_gtest(object_follower_test test/launch/object_follower.test test/object_follower_test.cpp)
-
-target_link_libraries(object_follower_test
-  object_follower_lib
-  ${catkin_LIBRARIES}
-  ${GTEST_LIBRARIES}
-)
-add_dependencies(object_follower_test ${PROJECT_NAME}_gencfg)
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_object_follower.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_dynamic_tutorials.cpp)
+# if(TARGET ${PROJECT_NAME}-test)
+#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+# endif()
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)

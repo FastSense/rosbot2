@@ -12,12 +12,12 @@ void MoveBaseFollower::follow() {
 
   tfStamped pose = getTf();
   setGoalTf(pose);
-  if (!updatePoseIfGood(pose))
+  if (!updatePoseIfConsidered(pose))
     return;
   sendGoal(tfToGoal(pose));
 }
 
-void MoveBaseFollower::sendGoal(const MoveBaseGoal &goal) noexcept {
+void MoveBaseFollower::sendGoal(const MoveBaseGoal &goal) {
   while (!move_base_client_.waitForServer(ros::Duration(SERVER_WAIT_DURATION))) {
     ROS_WARN("Waiting for the move_base action server to come up");
   }
@@ -26,7 +26,7 @@ void MoveBaseFollower::sendGoal(const MoveBaseGoal &goal) noexcept {
   move_base_client_.sendGoal(goal);
 }
 
-MoveBaseGoal MoveBaseFollower::tfToGoal(const tfStamped &pose) {
+MoveBaseGoal MoveBaseFollower::tfToGoal(const tfStamped &pose) const {
   MoveBaseGoal converted_pose;
 
   converted_pose.target_pose.pose.orientation.w = pose.transform.rotation.w;

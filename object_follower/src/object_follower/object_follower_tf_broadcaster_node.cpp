@@ -4,11 +4,11 @@ constexpr double NODE_RATE = 10.0;
 
 namespace Follower {
 
-TfBroadcasterNode::TfBroadcasterNode() : node_rate_(NODE_RATE) {}
+TfBroadcasterFollowerNode::TfBroadcasterFollowerNode() : node_rate_(NODE_RATE) {}
 
-void TfBroadcasterNode::sleep() { node_rate_.sleep(); }
+void TfBroadcasterFollowerNode::sleep() { node_rate_.sleep(); }
 
-void TfBroadcasterNode::start() {
+void TfBroadcasterFollowerNode::start() {
   while (ros::ok()) {
     try {
       follow();

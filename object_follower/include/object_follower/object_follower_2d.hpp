@@ -15,7 +15,7 @@ using Quaternion = geometry_msgs::Quaternion;
  * @brief Abstract Class extending ObjectFollower class with methods for setting goals on 2d space
  * frame names etc.
  */
-class ObjectFollower2d : public ObjectFollower {
+class ObjectFollower2d : public ObjectFollowerCore {
 public:
   ObjectFollower2d();
   ~ObjectFollower2d() = default;

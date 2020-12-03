@@ -6,6 +6,9 @@
 #include <ros/ros.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
+#include <dynamic_reconfigure/server.h>
+/* #include <object_follower/ObjectFollowerConfig.h> */
+
 #include <ros/service_server.h>
 #include <std_srvs/SetBool.h>
 
@@ -20,7 +23,7 @@ using Response = std_srvs::SetBool::Response;
 using QuaternionTf = tf2::Quaternion;
 using Vector3Tf = tf2::Vector3;
 
-/// Implementation of simple pair of ObjectFollower::Vector3Tf and ObjectFollower::QuaternionTf
+/// Implementation of simple struct consisting of ObjectFollower::Vector3Tf and ObjectFollower::QuaternionTf
 struct PoseTf {
   Vector3Tf translation;
   QuaternionTf quaternion;
@@ -30,16 +33,16 @@ struct PoseTf {
  * @brief Abstract Class consisting of basic functions to getting Tf cheking them as a goal,
  * NodeHandle's, frame names etc.
  */
-class ObjectFollower {
+class ObjectFollowerCore {
 public:
-  ObjectFollower();
+  ObjectFollowerCore();
 
   /**
    * Abstract method should be implemented as "while(ros::ok())" cycle
    */
   virtual void start() = 0;
 
-  ~ObjectFollower() = default;
+  ~ObjectFollowerCore() = default;
 
 protected:
   /**
@@ -64,24 +67,25 @@ protected:
   bool enableFollowingCb(Request &req, Response &res);
 
   /**
-   * Invokes ObjectFollower::isNewGoalGood and if good sets ObjectFollower::current_position_
+   * Invokes ObjectFollower::isGoalConsiderable and if good sets ObjectFollower::current_position_
    * through ObjectFollower::setCurrentPosition
    */
-  bool updatePoseIfGood(const tfStamped &pose);
+  bool updatePoseIfConsidered(const tfStamped &pose);
 
   /**
-   * Invokes ObjectFollower::isNewGoalGood and if good sets ObjectFollower::current_position_
+   * Invokes ObjectFollower::isGoalConsiderable and if it returns true new
+   * ObjectFollower::current_position_ will be set
    * @param[in] pose Pose to check
    * through ObjectFollower::setCurrentPosition
    */
-  bool isNewGoalGood(const tfStamped &pose) const;
+  bool isGoalConsiderable(const tfStamped &pose) const;
 
   /**
    * Retrieving ObjectFollower::PoseTf from ObjectFollower::tfStamped
    * @param[in] pose Pose to convert
    * @return PoseTf
    */
-  PoseTf getTfPoseFromMsg(const tfStamped &pose) const;
+  PoseTf convertPoseMsgToTf(const tfStamped &pose) const;
 
   /**
    * Sets ObjectFollower::current_position_
@@ -95,16 +99,16 @@ protected:
    * tf2::ConnectivityException
    * tf2::ExtrapolationException
    * ros::Exception
-   * ... (all others)
+   * and all others
    */
   void exceptionFilter() const;
-
-  std::optional<tfStamped> current_position_;
 
 private:
   void setParams(); /// sets params from parameter server
 
 protected:
+  std::optional<tfStamped> current_position_;
+
   std::string base_frame_;
   std::string object_frame_;
 

@@ -44,7 +44,8 @@ Follower::Vector3 getPosition(double x, double y, double z) {
   return poseVec;
 }
 
-class ObjectFollowerTest : public ::testing::Test, public Follower::TfBroadcasterNode {
+/// @brief Test Fixture
+class ObjectFollowerTest : public ::testing::Test, public Follower::TfBroadcasterFollowerNode {
 protected:
   void SetUp() override {}
   void TearDown() override {}
@@ -83,7 +84,7 @@ TEST_F(ObjectFollowerTest, testGoalIsBad) {
     for (double angle : angles) {
       position.transform.translation.x = translation;
       setYawAngle(position.transform.rotation, angle);
-      if (isNewGoalGood(position))
+      if (isGoalConsiderable(position))
         FAIL() << "Goal must be BAD \n translation sent: " << translation
                << "\n Rotation sent: " << angle;
     }
@@ -107,7 +108,7 @@ TEST_F(ObjectFollowerTest, testGoalIsGood) {
     for (double angle : angles) {
       position.transform.translation.x = translation;
       setYawAngle(position.transform.rotation, angle);
-      if (!isNewGoalGood(position))
+      if (!isGoalConsiderable(position))
         FAIL() << "Goal must be GOOD \n translation sent: " << translation
                << "\n Rotation sent: " << angle;
     }

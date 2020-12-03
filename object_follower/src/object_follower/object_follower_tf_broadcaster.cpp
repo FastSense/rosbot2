@@ -2,21 +2,21 @@
 
 namespace Follower {
 
-TfBroadcaster::TfBroadcaster() {
+TfBroadcasterFollower::TfBroadcasterFollower() {
   pnh_.param<std::string>("goal_frame_", goal_frame_, "goal_to_follow");
 }
 
-void TfBroadcaster::follow() {
+void TfBroadcasterFollower::follow() {
   if (!following_enabled_)
     return;
 
   auto pose_tf = getTf();
   setGoalTf(pose_tf);
-  if (updatePoseIfGood(pose_tf))
+  if (updatePoseIfConsidered(pose_tf))
     broadcast(pose_tf);
 }
 
-void TfBroadcaster::broadcast(tfStamped &pose) {
+void TfBroadcasterFollower::broadcast(tfStamped &pose) {
   pose.child_frame_id = goal_frame_;
   tf_broadcaster_.sendTransform(pose);
 }

@@ -5,17 +5,17 @@ const inline std::string SERVICE_NAME = "enable_following";
 
 namespace Follower {
 
-ObjectFollower::ObjectFollower() : nh_(), pnh_("~") {
+ObjectFollowerCore::ObjectFollowerCore() : nh_(), pnh_("~") {
   setParams();
 
   tf_listener_ = std::make_unique<tfListener>(tf_buffer_);
   tf_wait_ = ros::Duration(tf_wait_value_);
 
   service_enable_following =
-      pnh_.advertiseService(SERVICE_NAME, &ObjectFollower::enableFollowingCb, this);
+      pnh_.advertiseService(SERVICE_NAME, &ObjectFollowerCore::enableFollowingCb, this);
 }
 
-void ObjectFollower::exceptionFilter() const {
+void ObjectFollowerCore::exceptionFilter() const {
   try {
     throw;
   } catch (tf2::LookupException &ex) {
@@ -33,7 +33,7 @@ void ObjectFollower::exceptionFilter() const {
   }
 }
 
-void ObjectFollower::setParams() {
+void ObjectFollowerCore::setParams() {
   pnh_.param<std::string>("base_frame", base_frame_, "map");
   pnh_.param<std::string>("object_frame_", object_frame_, "object");
 
@@ -44,14 +44,14 @@ void ObjectFollower::setParams() {
   pnh_.param<double>("goal_dist_from_obj", goal_dist_from_obj_, 1.0);
 }
 
-bool ObjectFollower::enableFollowingCb(Request &req, Response &res) {
+bool ObjectFollowerCore::enableFollowingCb(Request &req, Response &res) {
   following_enabled_ = req.data;
   ROS_INFO("Following set to %d", following_enabled_);
   res.success = true;
   return true;
 }
 
-tfStamped ObjectFollower::getTf() const {
+tfStamped ObjectFollowerCore::getTf() const {
   static ros::Time tf_oldness;
   tf_oldness = ros::Time(ros::Time::now());
   tfStamped tf_pose;
@@ -59,7 +59,7 @@ tfStamped ObjectFollower::getTf() const {
   return tf_pose;
 }
 
-PoseTf ObjectFollower::getTfPoseFromMsg(const tfStamped &pose) const {
+PoseTf ObjectFollowerCore::convertPoseMsgToTf(const tfStamped &pose) const {
   Vector3Tf t_tf;
   QuaternionTf q_tf;
 
@@ -69,14 +69,14 @@ PoseTf ObjectFollower::getTfPoseFromMsg(const tfStamped &pose) const {
   return PoseTf{t_tf, q_tf};
 }
 
-bool ObjectFollower::updatePoseIfGood(const tfStamped &pose) {
+bool ObjectFollowerCore::updatePoseIfConsidered(const tfStamped &pose) {
   if (!current_position_.has_value()) {
     current_position_ = pose;
     return true;
   }
 
   bool state = false;
-  if ((state = isNewGoalGood(pose))) {
+  if ((state = isGoalConsiderable(pose))) {
     ROS_INFO("New Pose accepted");
     setCurrentPosition(pose);
   }
@@ -84,11 +84,11 @@ bool ObjectFollower::updatePoseIfGood(const tfStamped &pose) {
   return state;
 }
 
-void ObjectFollower::setCurrentPosition(const tfStamped &pose) { current_position_ = pose; }
+void ObjectFollowerCore::setCurrentPosition(const tfStamped &pose) { current_position_ = pose; }
 
-bool ObjectFollower::isNewGoalGood(const tfStamped &pose) const {
-  auto [new_position, new_quaternion] = getTfPoseFromMsg(pose);
-  auto [old_position, old_quaternion] = getTfPoseFromMsg(current_position_.value());
+bool ObjectFollowerCore::isGoalConsiderable(const tfStamped &pose) const {
+  auto [new_position, new_quaternion] = convertPoseMsgToTf(pose);
+  auto [old_position, old_quaternion] = convertPoseMsgToTf(current_position_.value());
 
   double dist = tf2::tf2Distance(old_position, new_position);
   double angle_in_radian = tf2::angle(old_quaternion, new_quaternion);

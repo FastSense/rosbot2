@@ -5,10 +5,10 @@
 namespace Follower {
 
 /// Abstract Class extending ObjectFollower2d class with methods for broadcasting Tf
-class TfBroadcaster : public ObjectFollower2d {
+class TfBroadcasterFollower : public ObjectFollower2d {
 public:
-  TfBroadcaster();
-  ~TfBroadcaster() = default;
+  TfBroadcasterFollower();
+  ~TfBroadcasterFollower() = default;
 
 protected:
   void follow() final;

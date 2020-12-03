@@ -7,6 +7,7 @@
 
 constexpr double NODE_RATE = 10.0;
 
+/// @brief Test helper method for publishing goal tf
 class tfPublisher {
 
 public:

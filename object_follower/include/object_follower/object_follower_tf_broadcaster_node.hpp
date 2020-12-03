@@ -4,13 +4,13 @@
 namespace Follower {
 
 /// Implementation of TfBroadcaster abstract class
-class TfBroadcasterNode : public TfBroadcaster {
+class TfBroadcasterFollowerNode : public TfBroadcasterFollower {
 public:
-  TfBroadcasterNode();
+  TfBroadcasterFollowerNode();
   void start() final;
   void sleep() final;
 
-  ~TfBroadcasterNode() = default;
+  ~TfBroadcasterFollowerNode() = default;
 
 private:
   ros::Rate node_rate_;
