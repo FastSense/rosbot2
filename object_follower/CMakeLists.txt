@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(object_follower)
+project(object_follower LANGUAGES CXX)
 
 add_definitions(-std=c++17)
 ## Compile as C++11, supported in ROS Kinetic and newer
@@ -17,6 +17,8 @@ find_package(catkin REQUIRED COMPONENTS
   move_base_msgs
 )
 
+find_package(rostest REQUIRED)
+find_package(gtest)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -227,11 +229,14 @@ target_link_libraries(test_tf_publisher_node
   ${catkin_LIBRARIES}
 )
 
-catkin_add_gtest(object_follower_test test/object_follower_test.cpp )
+# catkin_add_gtest(object_follower_test test/object_follower_test.cpp )
+
+add_rostest_gtest(object_follower_test test/launch/object_follower.test test/object_follower_test.cpp)
 
 target_link_libraries(object_follower_test
   object_follower_lib
   ${catkin_LIBRARIES}
+  ${GTEST_LIBRARIES}
 )
 
 ## Add gtest based cpp test target and link libraries

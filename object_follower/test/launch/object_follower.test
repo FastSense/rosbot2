@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="object_follower" type="test_tf_publisher_node" name="test_tf_publisher_node" output="log"/>
+
+  <test test-name="object_follower_test" pkg="object_follower" type="object_follower_test" />
+</launch>
