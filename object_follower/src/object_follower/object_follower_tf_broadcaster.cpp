@@ -3,7 +3,7 @@
 namespace Follower {
 
 TfBroadcasterFollower::TfBroadcasterFollower() {
-  pnh_.param<std::string>("goal_frame_", goal_frame_, "goal_to_follow");
+  pnh_.param<std::string>("goal_frame", goal_frame_, "goal_to_follow");
 }
 
 void TfBroadcasterFollower::follow() {

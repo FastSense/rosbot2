@@ -1,0 +1,5 @@
+
+<launch>
+  <node pkg="object_follower" type="test_tf_publisher_node" name="object_follower_test_launch" output="screen"/>
+  <include file="$(find object_follower)/launch/object_follower_tf.launch"/>
+</launch>
