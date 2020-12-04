@@ -3,7 +3,7 @@
 
 namespace Follower {
 
-/// Implementation of TfBroadcaster abstract class
+/// Implementation of TfBroadcasterFollowerNode abstract class
 class TfBroadcasterFollowerNode : public TfBroadcasterFollower {
 public:
   TfBroadcasterFollowerNode();

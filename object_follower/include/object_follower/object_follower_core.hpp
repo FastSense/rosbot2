@@ -23,15 +23,15 @@ using Response = std_srvs::SetBool::Response;
 using QuaternionTf = tf2::Quaternion;
 using Vector3Tf = tf2::Vector3;
 
-/// Implementation of simple struct consisting of ObjectFollower::Vector3Tf and ObjectFollower::QuaternionTf
+/// Implementation of simple struct consisting of ObjectFollowerCore::Vector3Tf and ObjectFollowerCore::QuaternionTf
 struct PoseTf {
   Vector3Tf translation;
   QuaternionTf quaternion;
 };
 
 /**
- * @brief Abstract Class consisting of basic functions to getting Tf cheking them as a goal,
- * NodeHandle's, frame names etc.
+ * @brief Abstract Class consisting of basic functions helping to get Tf, check them as considerable base on internal params. 
+ * Includes NodeHandle's, frame names etc.
  */
 class ObjectFollowerCore {
 public:
@@ -57,38 +57,38 @@ protected:
 
   /**
    * @throws tfLookupTransform related ros exceptions
-   * @return returns tf from ObjectFollower::base_frame_ to ObjectFollower::object_frame_
+   * @return returns tf from ObjectFollowerCore::base_frame_ to ObjectFollowerCore::object_frame_
    */
   tfStamped getTf() const;
 
   /**
-   * Service callback to change ObjectFollower::following_enabled_
+   * Service callback to change ObjectFollowerCore::following_enabled_
    */
   bool enableFollowingCb(Request &req, Response &res);
 
   /**
-   * Invokes ObjectFollower::isGoalConsiderable and if good sets ObjectFollower::current_position_
-   * through ObjectFollower::setCurrentPosition
+   * Invokes ObjectFollowerCore::isGoalConsiderable and if good sets ObjectFollowerCore::current_position_
+   * through ObjectFollowerCore::setCurrentPosition
    */
   bool updatePoseIfConsidered(const tfStamped &pose);
 
   /**
-   * Invokes ObjectFollower::isGoalConsiderable and if it returns true new
-   * ObjectFollower::current_position_ will be set
+   * Invokes ObjectFollowerCore::isGoalConsiderable and if it returns true new
+   * ObjectFollowerCore::current_position_ will be set
    * @param[in] pose Pose to check
-   * through ObjectFollower::setCurrentPosition
+   * through ObjectFollowerCore::setCurrentPosition
    */
   bool isGoalConsiderable(const tfStamped &pose) const;
 
   /**
-   * Retrieving ObjectFollower::PoseTf from ObjectFollower::tfStamped
+   * Retrieving ObjectFollowerCore::PoseTf from ObjectFollowerCore::tfStamped
    * @param[in] pose Pose to convert
    * @return PoseTf
    */
   PoseTf convertPoseMsgToTf(const tfStamped &pose) const;
 
   /**
-   * Sets ObjectFollower::current_position_
+   * Sets ObjectFollowerCore::current_position_
    */
   void setCurrentPosition(const tfStamped &pose);
 
