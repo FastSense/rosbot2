@@ -94,11 +94,10 @@ bool ObjectFollowerCore::isGoalConsiderable(const tfStamped &pose) const {
   double angle_in_radian = tf2::angle(old_quaternion, new_quaternion);
   double angle_in_degrees = angle_in_radian * 180.0 / M_PI;
 
-  const double &angle = angle_in_degrees;
-  const double &max_dist = range_diff_to_set_new_pose_;
-  const double &max_angle = angle_diff_to_set_new_pose_;
+  bool isDistConsidirable = dist > range_diff_to_set_new_pose_;
+  bool isAngleConsidirable =  angle_in_radian > angle_diff_to_set_new_pose_;
 
-  return (dist > max_dist || angle > max_angle) ? true : false;
+  return ( isDistConsidirable || isAngleConsidirable) ? true : false;
 }
 
 }; // namespace Follower

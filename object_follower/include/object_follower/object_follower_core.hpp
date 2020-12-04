@@ -67,14 +67,13 @@ protected:
   bool enableFollowingCb(Request &req, Response &res);
 
   /**
-   * Invokes ObjectFollowerCore::isGoalConsiderable and if good sets ObjectFollowerCore::current_position_
-   * through ObjectFollowerCore::setCurrentPosition
+   * Invokes ObjectFollowerCore::isGoalConsiderable and if it returns true new
+   * ObjectFollowerCore::current_position_ will be set to pose value
    */
   bool updatePoseIfConsidered(const tfStamped &pose);
 
   /**
-   * Invokes ObjectFollowerCore::isGoalConsiderable and if it returns true new
-   * ObjectFollowerCore::current_position_ will be set
+   * Checks dist and angle constraints to set new goal
    * @param[in] pose Pose to check
    * through ObjectFollowerCore::setCurrentPosition
    */
