@@ -1,4 +1,4 @@
-#include "object_follower_move_base.hpp"
+#include "objf_move_base.hpp"
 
 constexpr double SERVER_WAIT_DURATION = 2.0;
 
@@ -12,7 +12,7 @@ void MoveBaseFollower::follow() {
 
   tfStamped pose = getTf();
   setGoalTf(pose);
-  if (!updatePoseIfConsidered(pose))
+  if (!updatePoseIfConsiderable(pose))
     return;
   sendGoal(tfToGoal(pose));
 }

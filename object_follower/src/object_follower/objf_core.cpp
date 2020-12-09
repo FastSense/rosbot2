@@ -1,4 +1,4 @@
-#include "object_follower_core.hpp"
+#include "objf_core.hpp"
 
 constexpr double NODE_RATE = 10.0;
 const inline std::string SERVICE_NAME = "enable_following";
@@ -11,8 +11,11 @@ ObjectFollowerCore::ObjectFollowerCore() : nh_(), pnh_("~") {
   tf_listener_ = std::make_unique<tfListener>(tf_buffer_);
   tf_wait_ = ros::Duration(tf_wait_value_);
 
-  service_enable_following =
+  service_enable_following_ =
       pnh_.advertiseService(SERVICE_NAME, &ObjectFollowerCore::enableFollowingCb, this);
+
+  setGoalBaseFrame();
+  broadcastNewOrigin();
 }
 
 void ObjectFollowerCore::setParams() {
@@ -24,6 +27,39 @@ void ObjectFollowerCore::setParams() {
 
   pnh_.param<double>("tf_wait", tf_wait_value_, 1.0);
   pnh_.param<double>("goal_dist_from_obj", goal_dist_from_obj_, 1.0);
+
+  int origin_type_;
+  pnh_.param<int>("origin_type", origin_type_, 0);
+  object_origin_ = static_cast<OriginType>(origin_type_);
+}
+
+void ObjectFollowerCore::setGoalBaseFrame() {
+  goal_base_frame_ = base_frame_ + base_frame_postfix_;
+}
+
+void ObjectFollowerCore::broadcastNewOrigin() {
+
+  tfStamped new_origin;
+
+  new_origin.header.stamp = ros::Time::now();
+
+  new_origin.header.frame_id = base_frame_;
+
+  new_origin.child_frame_id = goal_base_frame_;
+
+  new_origin.transform.translation.x = 0;
+  new_origin.transform.translation.y = 0;
+  new_origin.transform.translation.z = 0;
+  tf2::Quaternion q;
+
+  q.setRPY(0, 0, 0);
+
+  ROS_INFO("%d", object_origin_);
+  new_origin.transform.rotation.x = q.x();
+  new_origin.transform.rotation.y = q.y();
+  new_origin.transform.rotation.z = q.z();
+  new_origin.transform.rotation.w = q.w();
+  static_broadcaster_.sendTransform(new_origin);
 }
 
 bool ObjectFollowerCore::enableFollowingCb(Request &req, Response &res) {
@@ -35,9 +71,10 @@ bool ObjectFollowerCore::enableFollowingCb(Request &req, Response &res) {
 
 tfStamped ObjectFollowerCore::getTf() const {
   static ros::Time tf_oldness;
+
   tf_oldness = ros::Time(ros::Time::now());
   tfStamped tf_pose;
-  tf_pose = tf_buffer_.lookupTransform(base_frame_, object_frame_, tf_oldness, tf_wait_);
+  tf_pose = tf_buffer_.lookupTransform(goal_base_frame_, object_frame_, tf_oldness, tf_wait_);
   return tf_pose;
 }
 
@@ -51,7 +88,7 @@ PoseTf ObjectFollowerCore::convertPoseMsgToTf(const tfStamped &pose) const {
   return PoseTf{t_tf, q_tf};
 }
 
-bool ObjectFollowerCore::updatePoseIfConsidered(const tfStamped &pose) {
+bool ObjectFollowerCore::updatePoseIfConsiderable(const tfStamped &pose) {
   if (!current_position_.has_value()) {
     current_position_ = pose;
     return true;

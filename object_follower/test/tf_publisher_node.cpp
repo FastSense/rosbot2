@@ -1,3 +1,4 @@
+#include "ros/node_handle.h"
 #include "ros/rate.h"
 #include <cmath>
 #include <geometry_msgs/TransformStamped.h>
@@ -5,15 +6,18 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_ros/transform_broadcaster.h>
 
-constexpr double NODE_RATE = 10.0;
+constexpr double NODE_RATE = 5.0;
 
 /// @brief Test helper method for publishing goal tf
 class tfPublisher {
 
 public:
-  tfPublisher(double x_min_val, double x_max_val, double angle_min_val, double angle_max_val) {
+  tfPublisher(double x_min_val, double x_max_val, double angle_min_val, double angle_max_val)
+      : nh_(), pnh_("~") {
     setAngleConstraints(angle_min_val, angle_max_val);
     setRangeConstraints(x_min_val, x_max_val);
+
+    pnh_.param<bool>("is_x_forward", is_x_forward_, true);
   }
 
   void start() {
@@ -27,19 +31,14 @@ private:
     double pos_x_value;
     double angle_value;
 
-    ROS_INFO("STEP COUNT %f", step_count_);
-    ROS_INFO("X_MIN %f", x_min_);
-    ROS_INFO("X_INCREMENT %f", x_increment_);
-    ROS_INFO("MIN_ANGLE %f", min_angle_);
-    ROS_INFO("angle_increment_ %f", angle_increment_);
     for (int i = 0, j = 0; j < step_count_; j++, i++) {
       pos_x_value = x_min_ + x_increment_ * i;
       angle_value = min_angle_ + angle_increment_ * j;
 
-      ROS_INFO("Iteration %d. Pose x: %f, angle: %f", i, pos_x_value, angle_value);
+      ROS_INFO_THROTTLE(5, "Iteration %d. Pose x: %f, angle: %f", i, pos_x_value, angle_value);
       current_position_.setX(pos_x_value);
       iterateBroadcating(current_position_, angle_value);
-      rate.sleep();
+      rate_.sleep();
     }
   }
 
@@ -47,8 +46,6 @@ private:
     x_min_ = in_x_min;
     x_max_ = in_x_max;
     x_increment_ = (in_x_max - in_x_min) / step_count_;
-    ROS_INFO("SET XMIN =%f ; XMAX =%f ; XSTEP =%f, STEP_COUNT = %f, ANGLEINCREMENT = %f", x_min_,
-             x_max_, x_increment_, step_count_, angle_increment_);
   }
 
   void setAngleConstraints(double in_min_angle, double in_max_angle) {
@@ -71,7 +68,12 @@ private:
     transformStamped.transform.translation.z = pose.z();
     tf2::Quaternion q;
 
-    q.setRPY(0, 0, theta);
+    if (is_x_forward_) {
+      q.setRPY(0, 0, theta);
+    } else {
+      q.setRPY(theta, M_PI / 2, 0);
+    }
+
     transformStamped.transform.rotation.x = q.x();
     transformStamped.transform.rotation.y = q.y();
     transformStamped.transform.rotation.z = q.z();
@@ -81,12 +83,16 @@ private:
   }
 
 protected:
+  ros::NodeHandle nh_;
+  ros::NodeHandle pnh_;
+
   std::string base_frame_ = "map";
   std::string object_frame_ = "object";
   tf2::Vector3 current_position_ = {0, 0, 0};
 
-  ros::Rate rate = ros::Rate(NODE_RATE);
+  ros::Rate rate_ = ros::Rate(NODE_RATE);
 
+  bool is_x_forward_;
   double min_angle_;
   double max_angle_;
 
@@ -101,7 +107,6 @@ protected:
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "tf_broacaster");
-  ros::NodeHandle nh;
 
   double x_min = 1.0;
   double x_max = 3.0;

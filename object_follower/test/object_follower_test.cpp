@@ -77,8 +77,8 @@ TEST_F(ObjectFollowerTest, testGoalIsBad) {
   setYawAngle(position.transform.rotation, 0);
   setCurrentPosition(position);
 
-  auto translations = getTranslationRange(0, 0.95, 0.1);
-  auto angles = getRotationRange(0, 9.95, 0.1);
+  auto translations = getTranslationRange(0, 0.95, 0.2);
+  auto angles = getRotationRange(0, 9.95, 0.2);
 
   for (double translation : translations) {
     for (double angle : angles) {
@@ -108,6 +108,7 @@ TEST_F(ObjectFollowerTest, testGoalIsGood) {
     for (double angle : angles) {
       position.transform.translation.x = translation;
       setYawAngle(position.transform.rotation, angle);
+
       if (!isGoalConsiderable(position))
         FAIL() << "Goal must be GOOD \n translation sent: " << translation
                << "\n Rotation sent: " << angle;

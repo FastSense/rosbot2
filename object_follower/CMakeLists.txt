@@ -13,7 +13,6 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 find_package(rostest REQUIRED)
-find_package(gtest)
 
 generate_dynamic_reconfigure_options(cfg/ObjectFollower.cfg)
 
@@ -30,21 +29,21 @@ include_directories(
 )
 
  add_library(object_follower_lib 
-   src/object_follower/object_follower_core.cpp
-   src/object_follower/object_follower_2d.cpp
-   src/object_follower/object_follower_move_base.cpp
-   src/object_follower/object_follower_tf_broadcaster.cpp
-   src/object_follower/object_follower_tf_broadcaster_node.cpp
+   src/object_follower/objf_core.cpp
+   src/object_follower/objf_2d.cpp
+   src/object_follower/objf_move_base.cpp
+   src/object_follower/objf_tf_broadcaster.cpp
+   src/object_follower/objf_tf_broadcaster_node.cpp
 
-   include/object_follower/object_follower_core.hpp
-   include/object_follower/object_follower_2d.hpp
-   include/object_follower/object_follower_move_base.hpp
-   include/object_follower/object_follower_tf_broadcaster.hpp
-   src/object_follower/object_follower_move_base_node.cpp
+   include/object_follower/objf_core.hpp
+   include/object_follower/objf_2d.hpp
+   include/object_follower/objf_move_base.hpp
+   include/object_follower/objf_tf_broadcaster.hpp
+   src/object_follower/objf_move_base_node.cpp
    )
 
-add_executable(object_follower_tf_broadcaster_node src/object_follower/object_follower_tf_broadcaster_main.cpp )
-add_executable(object_follower_move_base_node src/object_follower/object_follower_move_base_main.cpp )
+add_executable(object_follower_tf_broadcaster_node src/object_follower/objf_tf_broadcaster_main.cpp )
+add_executable(object_follower_move_base_node src/object_follower/objf_move_base_main.cpp )
 
 add_dependencies(object_follower_tf_broadcaster_node ${PROJECT_NAME}_gencfg)
 add_dependencies(object_follower_move_base_node ${PROJECT_NAME}_gencfg)
@@ -109,11 +108,18 @@ target_link_libraries(test_tf_publisher_node
   ${catkin_LIBRARIES}
 )
 
-add_rostest_gtest(object_follower_test test/launch/object_follower.test test/object_follower_test.cpp)
-target_link_libraries(object_follower_test
+add_rostest_gtest(object_follower_test_x test/launch/object_follower_forward_x.test test/object_follower_test.cpp)
+add_rostest_gtest(object_follower_test_z test/launch/object_follower_forward_z.test test/object_follower_test.cpp)
+
+target_link_libraries(object_follower_test_x
   object_follower_lib
   ${catkin_LIBRARIES}
-  ${GTEST_LIBRARIES}
 )
 
-add_dependencies(object_follower_test ${PROJECT_NAME}_gencfg)
+target_link_libraries(object_follower_test_z
+  object_follower_lib
+  ${catkin_LIBRARIES}
+)
+
+add_dependencies(object_follower_test_x ${PROJECT_NAME}_gencfg)
+add_dependencies(object_follower_test_z ${PROJECT_NAME}_gencfg)

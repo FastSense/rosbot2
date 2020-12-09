@@ -1,4 +1,4 @@
-#include "object_follower_tf_broadcaster.hpp"
+#include "objf_tf_broadcaster.hpp"
 
 namespace Follower {
 
@@ -12,11 +12,12 @@ void TfBroadcasterFollower::follow() {
 
   auto pose_tf = getTf();
   setGoalTf(pose_tf);
-  if (updatePoseIfConsidered(pose_tf))
+  if (updatePoseIfConsiderable(pose_tf))
     broadcast(pose_tf);
 }
 
 void TfBroadcasterFollower::broadcast(tfStamped &pose) {
+  pose.header.frame_id = goal_base_frame_;
   pose.child_frame_id = goal_frame_;
   tf_broadcaster_.sendTransform(pose);
 }

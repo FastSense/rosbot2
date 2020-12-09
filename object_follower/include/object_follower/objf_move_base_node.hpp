@@ -1,4 +1,4 @@
-#include "object_follower_move_base.hpp"
+#include "objf_move_base.hpp"
 #include "ros/init.h"
 
 namespace Follower {
@@ -8,6 +8,8 @@ namespace Follower {
  */
 class MoveBaseFollowerNode : public MoveBaseFollower {
 public:
+
+   /// Initialize MoveBaseFollowerNode::node_rate_
   MoveBaseFollowerNode();
   void start() final;
   void sleep() final;

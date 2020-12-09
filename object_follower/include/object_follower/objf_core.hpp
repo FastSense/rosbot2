@@ -1,10 +1,10 @@
 #pragma once
-
 #include "ros/time.h"
 #include "tf2_ros/transform_listener.h"
 #include <optional>
 #include <ros/ros.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2_ros/static_transform_broadcaster.h>
 
 #include <dynamic_reconfigure/server.h>
 /* #include <object_follower/ObjectFollowerConfig.h> */
@@ -16,25 +16,32 @@ namespace Follower {
 
 using tfStamped = geometry_msgs::TransformStamped;
 using tfListener = tf2_ros::TransformListener;
-
 using Request = std_srvs::SetBool::Request;
 using Response = std_srvs::SetBool::Response;
-
 using QuaternionTf = tf2::Quaternion;
 using Vector3Tf = tf2::Vector3;
 
-/// Implementation of simple struct consisting of ObjectFollowerCore::Vector3Tf and ObjectFollowerCore::QuaternionTf
+enum class OriginType { Default, Camera };
+
+/**
+ * @brief Implementation of simple struct consisting of ObjectFollowerCore::Vector3Tf and
+ * ObjectFollowerCore::QuaternionTf
+ */
+
 struct PoseTf {
   Vector3Tf translation;
   QuaternionTf quaternion;
 };
 
 /**
- * @brief Abstract Class consisting of basic functions helping to get Tf, check them as considerable base on internal params. 
- * Includes NodeHandle's, frame names etc.
+ * @brief Abstract Class consisting of basic functions helping to get Tf, check them as considerable
+ * base on internal params. Includes NodeHandle's, frame names etc.
  */
 class ObjectFollowerCore {
 public:
+  /**
+   * @brief invokes ObjectFollowerCore::setParams, initilize common params
+   */
   ObjectFollowerCore();
 
   /**
@@ -56,10 +63,22 @@ protected:
   virtual void sleep() = 0;
 
   /**
+   * @brief static broadcasting new origin depending on the object frame orientation
+   */
+  void broadcastNewOrigin();
+  void setGoalBaseFrame();
+
+  /**
    * @throws tfLookupTransform related ros exceptions
    * @return returns tf from ObjectFollowerCore::base_frame_ to ObjectFollowerCore::object_frame_
    */
   tfStamped getTf() const;
+
+  /**
+   * Inverting pose based on ObjectFollowerCore::object_orientation_
+   * @param[in, out] pose Pose to invert
+   */
+  void invertAxises(tfStamped &pose) const;
 
   /**
    * Service callback to change ObjectFollowerCore::following_enabled_
@@ -70,7 +89,7 @@ protected:
    * Invokes ObjectFollowerCore::isGoalConsiderable and if it returns true new
    * ObjectFollowerCore::current_position_ will be set to pose value
    */
-  bool updatePoseIfConsidered(const tfStamped &pose);
+  bool updatePoseIfConsiderable(const tfStamped &pose);
 
   /**
    * Checks dist and angle constraints to set new goal
@@ -107,10 +126,8 @@ private:
 
 protected:
   std::optional<tfStamped> current_position_;
-
   std::string base_frame_;
   std::string object_frame_;
-
   bool following_enabled_ = true;
 
   /// distance from the object at which the goal will be set
@@ -118,14 +135,13 @@ protected:
 
   /// new goal will be set only if farther then this (in meter)
   double range_diff_to_set_new_pose_;
-
   /**
    * new goal will be set only if new angle turned more then
    * this (in degree)
    */
   double angle_diff_to_set_new_pose_;
-
   double tf_wait_value_;
+
   ros::Duration tf_wait_;
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
@@ -133,8 +149,14 @@ protected:
   std::unique_ptr<tfListener> tf_listener_;
   tf2_ros::Buffer tf_buffer_;
 
+  static const inline std::string base_frame_postfix_ = "_follower_origin";
+  std::string goal_base_frame_;
+
+  OriginType object_origin_;
+  tf2_ros::StaticTransformBroadcaster static_broadcaster_;
+
 private:
-  ros::ServiceServer service_enable_following;
+  ros::ServiceServer service_enable_following_;
 };
 
 }; // namespace Follower

@@ -1,5 +1,5 @@
 #pragma once
-#include "object_follower_2d.hpp"
+#include "objf_2d.hpp"
 #include <tf2_ros/transform_broadcaster.h>
 
 namespace Follower {
@@ -7,6 +7,7 @@ namespace Follower {
 /// Abstract Class extending ObjectFollower2d class with methods for broadcasting Tf
 class TfBroadcasterFollower : public ObjectFollower2d {
 public:
+   /// Initialize TfBroadcasterFollower::goal_frame_ through parameter server
   TfBroadcasterFollower();
   ~TfBroadcasterFollower() = default;
 

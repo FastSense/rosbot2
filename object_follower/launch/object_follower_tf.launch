@@ -9,5 +9,7 @@
     <param name="goal_dist_from_obj" value="1.0"/>
     <param name="goal_frame" value="goal_to_follow"/>
 
+    <!-- See OrientationType --> 
+    <param name="origin_type" value="1"/>
   </node>
 </launch>
