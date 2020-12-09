@@ -33,13 +33,11 @@ include_directories(
    src/object_follower/objf_2d.cpp
    src/object_follower/objf_move_base.cpp
    src/object_follower/objf_tf_broadcaster.cpp
-   src/object_follower/objf_tf_broadcaster_node.cpp
 
    include/object_follower/objf_core.hpp
    include/object_follower/objf_2d.hpp
    include/object_follower/objf_move_base.hpp
    include/object_follower/objf_tf_broadcaster.hpp
-   src/object_follower/objf_move_base_node.cpp
    )
 
 add_executable(object_follower_tf_broadcaster_node src/object_follower/objf_tf_broadcaster_main.cpp )

@@ -75,12 +75,6 @@ protected:
   tfStamped getTf() const;
 
   /**
-   * Inverting pose based on ObjectFollowerCore::object_orientation_
-   * @param[in, out] pose Pose to invert
-   */
-  void invertAxises(tfStamped &pose) const;
-
-  /**
    * Service callback to change ObjectFollowerCore::following_enabled_
    */
   bool enableFollowingCb(Request &req, Response &res);
@@ -135,6 +129,7 @@ protected:
 
   /// new goal will be set only if farther then this (in meter)
   double range_diff_to_set_new_pose_;
+
   /**
    * new goal will be set only if new angle turned more then
    * this (in degree)

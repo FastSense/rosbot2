@@ -1,5 +1,5 @@
-#include "object_follower_2d.hpp"
-#include "object_follower_tf_broadcaster_node.hpp"
+#include "objf_2d.hpp"
+#include "objf_tf_broadcaster.hpp"
 #include "tf2/convert.h"
 #include <gtest/gtest.h>
 
@@ -45,7 +45,7 @@ Follower::Vector3 getPosition(double x, double y, double z) {
 }
 
 /// @brief Test Fixture
-class ObjectFollowerTest : public ::testing::Test, public Follower::TfBroadcasterFollowerNode {
+class ObjectFollowerTest : public ::testing::Test, public Follower::TfBroadcasterFollower {
 protected:
   void SetUp() override {}
   void TearDown() override {}

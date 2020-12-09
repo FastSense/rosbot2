@@ -11,6 +11,9 @@ public:
   TfBroadcasterFollower();
   ~TfBroadcasterFollower() = default;
 
+  void start() final;
+  void sleep() final;
+  
 protected:
   void follow() final;
 
@@ -19,6 +22,7 @@ private:
 
 private:
   tf2_ros::TransformBroadcaster tf_broadcaster_;
+  ros::Rate node_rate_;
 
 protected:
   std::string goal_frame_ = "goal_frame";

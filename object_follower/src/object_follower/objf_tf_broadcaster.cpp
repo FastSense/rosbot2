@@ -1,9 +1,26 @@
 #include "objf_tf_broadcaster.hpp"
 
+constexpr double NODE_RATE = 10.0;
+
 namespace Follower {
 
-TfBroadcasterFollower::TfBroadcasterFollower() {
+TfBroadcasterFollower::TfBroadcasterFollower() : node_rate_(NODE_RATE) {
   pnh_.param<std::string>("goal_frame", goal_frame_, "goal_to_follow");
+}
+
+void TfBroadcasterFollower::sleep() { node_rate_.sleep(); }
+
+void TfBroadcasterFollower::start() {
+  while (ros::ok()) {
+    try {
+      follow();
+    } catch (...) {
+      exceptionFilter();
+    }
+
+    ros::spinOnce();
+    sleep();
+  }
 }
 
 void TfBroadcasterFollower::follow() {

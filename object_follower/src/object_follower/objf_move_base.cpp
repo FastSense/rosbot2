@@ -1,10 +1,27 @@
 #include "objf_move_base.hpp"
 
+constexpr double node_rate = 10.0;
+
 constexpr double SERVER_WAIT_DURATION = 2.0;
 
 namespace Follower {
 
-MoveBaseFollower::MoveBaseFollower() {}
+MoveBaseFollower::MoveBaseFollower() : node_rate_(node_rate){}
+
+void MoveBaseFollower::sleep() { node_rate_.sleep(); }
+
+void MoveBaseFollower::start() {
+  while (ros::ok()) {
+    try {
+      follow();
+    } catch (...) {
+      exceptionFilter();
+    }
+
+    ros::spinOnce();
+    sleep();
+  }
+}
 
 void MoveBaseFollower::follow() {
   if (!following_enabled_)

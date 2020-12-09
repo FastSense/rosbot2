@@ -19,6 +19,9 @@ public:
   /// empty
   MoveBaseFollower();
 
+  void start() final;
+  void sleep() final;
+
   /**
    * Implementation of follow method
    */
@@ -29,6 +32,7 @@ public:
 private:
   void sendGoal(const MoveBaseGoal &goal);
   MoveBaseGoal tfToGoal(const tfStamped &pose) const;
+  ros::Rate node_rate_;
 
 private:
   MoveBaseClient move_base_client_ = MoveBaseClient("move_base", true);
