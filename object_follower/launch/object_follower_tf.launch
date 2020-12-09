@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="object_follower" type="object_follower_tf_broadcaster_node" name="object_follower" output="screen">
+  <node pkg="object_follower" type="object_follower_tf_node" name="object_follower" output="screen">
 
     <param name="base_frame" value="map"/>
     <param name="object_frame" value="object"/>
@@ -9,7 +9,7 @@
     <param name="goal_dist_from_obj" value="1.0"/>
     <param name="goal_frame" value="goal_to_follow"/>
 
-    <!-- See OrientationType --> 
-    <param name="origin_type" value="1"/>
+    <param name="send_goal_base_frame" value="map"/>
+
   </node>
 </launch>

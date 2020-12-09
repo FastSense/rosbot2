@@ -8,8 +8,5 @@
     <param name="tf_wait" value="1.0"/>
     <param name="goal_dist_from_obj" value="1.0"/>
 
-    <!-- See OrientationType --> 
-    <param name="object_orientation" value="1"/>
-
   </node>
 </launch>

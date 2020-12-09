@@ -29,32 +29,33 @@ include_directories(
 )
 
  add_library(object_follower_lib 
-   src/object_follower/objf_core.cpp
-   src/object_follower/objf_2d.cpp
-   src/object_follower/objf_move_base.cpp
-   src/object_follower/objf_tf_broadcaster.cpp
 
-   include/object_follower/objf_core.hpp
-   include/object_follower/objf_2d.hpp
-   include/object_follower/objf_move_base.hpp
-   include/object_follower/objf_tf_broadcaster.hpp
+   src/object_follower/ObjectFollowerCore.cpp
+
+   src/object_follower/GoalChecker.cpp
+   src/object_follower/GoalGenerator.cpp
+   src/object_follower/GoalGeneratorBaselink2D.cpp
+   src/object_follower/GoalPublisherTf.cpp
+   src/object_follower/GoalPublisher.cpp
+
+   src/object_follower/ConversionFunctions.cpp
    )
 
-add_executable(object_follower_tf_broadcaster_node src/object_follower/objf_tf_broadcaster_main.cpp )
-add_executable(object_follower_move_base_node src/object_follower/objf_move_base_main.cpp )
+add_executable(object_follower_tf_node src/object_follower/ObjectFollowerMain.cpp )
+# add_executable(object_follower_move_base_node src/object_follower/objf_move_base_main.cpp )
 
-add_dependencies(object_follower_tf_broadcaster_node ${PROJECT_NAME}_gencfg)
-add_dependencies(object_follower_move_base_node ${PROJECT_NAME}_gencfg)
+add_dependencies(object_follower_tf_node ${PROJECT_NAME}_gencfg)
+# add_dependencies(object_follower_move_base_node ${PROJECT_NAME}_gencfg)
 
-target_link_libraries(object_follower_tf_broadcaster_node
+target_link_libraries(object_follower_tf_node
   object_follower_lib
   ${catkin_LIBRARIES}
 )
 
-target_link_libraries(object_follower_move_base_node
-  object_follower_lib
-  ${catkin_LIBRARIES}
-)
+# target_link_libraries(object_follower_move_base_node
+#   object_follower_lib
+#   ${catkin_LIBRARIES}
+# )
 
 #############
 ## Install ##
