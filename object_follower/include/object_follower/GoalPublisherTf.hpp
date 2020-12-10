@@ -7,11 +7,9 @@
 class GoalPublisherTf : public GoalPublisher {
 public:
   virtual ~GoalPublisherTf() = default;
-
-protected:
   void sendGoal(geometry_msgs::TransformStamped &pose) override;
+  std::string goal_frame_ = "goal_tf_frame";
 
 private:
   tf2_ros::TransformBroadcaster tf_broadcaster_;
-  std::string goal_frame_ = "goal_tf_frame";
 };

@@ -1,11 +1,11 @@
 #include "GoalGeneratorBaselink2D.hpp"
-#include "ConversionFunctions.hpp"
+#include "Converter.hpp"
 
-void GoalGeneratorBaselink2D::evalGoalTf(geometry_msgs::TransformStamped &pose) {
+void GoalGeneratorBaselink2D::evalGoal(geometry_msgs::TransformStamped &pose) {
   geometry_msgs::Vector3 &translation = pose.transform.translation;
   geometry_msgs::Quaternion &rotation = pose.transform.rotation;
 
-  auto rpy = ConversionFunctions::getRPYfromQuaternion(pose.transform.rotation);
+  auto rpy = Converter::getRPYfromQuaternion(pose.transform.rotation);
 
   setGoalTranslation(translation, rpy);
   setGoalRotation(rotation, rpy);

@@ -12,6 +12,3 @@ geometry_msgs::TransformStamped GoalGenerator::lookupTransform() {
   tf_pose = tf_buffer_.lookupTransform(base_frame_, object_frame_, tf_oldness, tf_wait_);
   return tf_pose;
 }
-
-void GoalGenerator::evalGoalTf(geometry_msgs::TransformStamped &pose) {
-}

@@ -36,9 +36,8 @@ include_directories(
    src/object_follower/GoalGenerator.cpp
    src/object_follower/GoalGeneratorBaselink2D.cpp
    src/object_follower/GoalPublisherTf.cpp
-   src/object_follower/GoalPublisher.cpp
 
-   src/object_follower/ConversionFunctions.cpp
+   src/object_follower/Converter.cpp
    )
 
 add_executable(object_follower_tf_node src/object_follower/ObjectFollowerMain.cpp )

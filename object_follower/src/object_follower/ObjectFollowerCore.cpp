@@ -16,14 +16,14 @@ ObjectFollowerCore::ObjectFollowerCore(std::unique_ptr<GoalChecker> goal_checker
   setParams();
 }
 
-void ObjectFollowerCore::sleep() { goal_publisher_->rate_.sleep(); }
+void ObjectFollowerCore::sleep() const { goal_publisher_->rate_.sleep(); }
 
 void ObjectFollowerCore::start() {
   while (ros::ok()) {
     try {
       geometry_msgs::TransformStamped pose;
       pose = goal_generator_->lookupTransform();
-      goal_generator_->evalGoalTf(pose);
+      goal_generator_->evalGoal(pose);
       if (goal_checker_->updatePoseIfConsiderable(pose))
         goal_publisher_->sendGoal(pose);
     } catch (...) {
@@ -46,15 +46,12 @@ bool ObjectFollowerCore::enableFollowingCb(std_srvs::SetBool::Request &req,
 void ObjectFollowerCore::setParams() {
   pnh_.param<std::string>("base_frame", goal_generator_->base_frame_, "map");
   pnh_.param<std::string>("object_frame", goal_generator_->object_frame_, "object");
-  pnh_.param<double>("tf_wait", goal_generator_->tf_wait_value_, 1.0);
   pnh_.param<double>("goal_dist_from_obj", goal_generator_->goal_dist_from_obj_, 1.0);
-  goal_generator_->tf_wait_ = ros::Duration(goal_generator_->tf_wait_value_);
 
   pnh_.param<double>("range_diff_to_set_new_pose", goal_checker_->range_diff_to_set_new_pose_, 0.2);
   pnh_.param<double>("yaw_diff_to_set_new_pose", goal_checker_->angle_diff_to_set_new_pose_, 15.0);
 
   pnh_.param<std::string>("send_goal_base_frame", goal_publisher_->base_frame_, "map");
-
 }
 
 void ObjectFollowerCore::exceptionFilter() const {

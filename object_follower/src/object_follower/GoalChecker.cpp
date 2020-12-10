@@ -1,5 +1,5 @@
 #include "GoalChecker.hpp"
-#include "ConversionFunctions.hpp"
+#include "Converter.hpp"
 
 bool GoalChecker::updatePoseIfConsiderable(const geometry_msgs::TransformStamped &pose) {
   if (!current_position_.has_value()) {
@@ -14,8 +14,8 @@ bool GoalChecker::updatePoseIfConsiderable(const geometry_msgs::TransformStamped
 }
 
 bool GoalChecker::isGoalConsiderable(const geometry_msgs::TransformStamped &pose) const {
-  auto [new_position, new_quaternion] = ConversionFunctions::convertToTfPair(pose);
-  auto [old_position, old_quaternion] = ConversionFunctions::convertToTfPair(current_position_.value());
+  auto [new_position, new_quaternion] = Converter::convertToTfPair(pose);
+  auto [old_position, old_quaternion] = Converter::convertToTfPair(current_position_.value());
 
   double dist = tf2::tf2Distance(old_position, new_position);
   double angle_in_radian = tf2::angle(old_quaternion, new_quaternion);

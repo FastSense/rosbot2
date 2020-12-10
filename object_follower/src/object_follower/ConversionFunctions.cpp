@@ -1,6 +1,6 @@
-#include "ConversionFunctions.hpp"
+#include "Converter.hpp"
 
-PoseTf ConversionFunctions::convertToTfPair(const geometry_msgs::TransformStamped &pose) {
+PoseTf Converter::convertToTfPair(const geometry_msgs::TransformStamped &pose) {
   tf2::Vector3 t_tf;
   tf2::Quaternion q_tf;
 
@@ -10,7 +10,7 @@ PoseTf ConversionFunctions::convertToTfPair(const geometry_msgs::TransformStampe
   return PoseTf{t_tf, q_tf};
 }
 
-RPY ConversionFunctions::getRPYfromQuaternion(const geometry_msgs::Quaternion &rotation) {
+RPY Converter::getRPYfromQuaternion(const geometry_msgs::Quaternion &rotation) {
   tf2::Quaternion q_tf;
   tf2::convert(rotation, q_tf);
   double r, p, y;
