@@ -3,11 +3,11 @@
 #include "geometry_msgs/TransformStamped.h"
 #include "ros/rate.h"
 
-constexpr float rate_value = 10.0;
+constexpr float RATE_VALUE = 10.0;
 
 class GoalPublisher {
 public:
-  GoalPublisher() : rate_(rate_value){};
+  GoalPublisher() : rate_(RATE_VALUE){};
   virtual ~GoalPublisher() = default;
   virtual void sendGoal(geometry_msgs::TransformStamped &pose) = 0;
 

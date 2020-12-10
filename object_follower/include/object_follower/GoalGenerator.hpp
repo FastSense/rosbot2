@@ -3,7 +3,7 @@
 #include "geometry_msgs/TransformStamped.h"
 #include "tf2_ros/transform_listener.h"
 
-constexpr double tf_wait_value = 1.0;
+constexpr double TF_WAIT_VALUE = 1.0;
 
 class GoalGenerator {
 public:
@@ -19,7 +19,7 @@ public:
   double goal_dist_from_obj_;
 
 private:
-  ros::Duration tf_wait_ = ros::Duration(tf_wait_value);
+  ros::Duration tf_wait_ = ros::Duration(TF_WAIT_VALUE);
   std::unique_ptr<tf2_ros::TransformListener> tf_listener_;
   tf2_ros::Buffer tf_buffer_;
 };

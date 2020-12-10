@@ -2,11 +2,11 @@
 #include <memory>
 
 const inline std::string SERVICE_NAME = "enable_following";
+constexpr double LOGGER_MESSEGE_PERIOD = 5.0;
 
 ObjectFollowerCore::ObjectFollowerCore(std::unique_ptr<GoalChecker> goal_checker,
                                        std::unique_ptr<GoalGenerator> goal_generator,
                                        std::unique_ptr<GoalPublisher> goal_publisher)
-
     : goal_checker_(std::move(goal_checker)), goal_generator_(std::move(goal_generator)),
       goal_publisher_(std::move(goal_publisher)) {
 
@@ -30,6 +30,9 @@ void ObjectFollowerCore::start() {
 }
 
 void ObjectFollowerCore::follow() {
+  if (not following_enabled_)
+    return;
+
   geometry_msgs::TransformStamped pose;
 
   pose = goal_generator_->lookupTransform();
@@ -63,17 +66,17 @@ void ObjectFollowerCore::exceptionFilter() const {
   try {
     throw;
   } catch (tf2::LookupException &ex) {
-    ROS_WARN("Object frame not found: %s", ex.what());
+    ROS_WARN_THROTTLE(LOGGER_MESSEGE_PERIOD, "Object frame not found: %s", ex.what());
   } catch (tf2::TimeoutException &ex) {
-    ROS_WARN("Object frame lookup exceed it's time limit : %s", ex.what());
+    ROS_WARN_THROTTLE(LOGGER_MESSEGE_PERIOD, "Object frame lookup exceed it's time limit : %s", ex.what());
   } catch (tf2::ConnectivityException &ex) {
-    ROS_WARN("Object frame not connected to base frame !: %s", ex.what());
+    ROS_WARN_THROTTLE(LOGGER_MESSEGE_PERIOD, "Object frame not connected to base frame !: %s", ex.what());
   } catch (tf2::ExtrapolationException &ex) {
-    ROS_WARN("Extrapolation error : %s", ex.what());
+    ROS_WARN_THROTTLE(LOGGER_MESSEGE_PERIOD, "Extrapolation error : %s", ex.what());
   } catch (ros::Exception &ex) {
-    ROS_WARN("ROS exception caught: %s", ex.what());
+    ROS_WARN_THROTTLE(LOGGER_MESSEGE_PERIOD, "ROS exception caught: %s", ex.what());
   } catch (...) {
-    ROS_ERROR("Unpredictable error, can't send goal");
+    ROS_ERROR_THROTTLE(LOGGER_MESSEGE_PERIOD, "Unpredictable error, can't send goal");
   }
 }
 
