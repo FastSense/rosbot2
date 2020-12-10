@@ -15,7 +15,7 @@ public:
 
 private:
   bool isGoalConsiderable(const geometry_msgs::TransformStamped &pose) const;
-  inline void setCurrentPosition(const geometry_msgs::TransformStamped &pose) {
+  void setCurrentPosition(const geometry_msgs::TransformStamped &pose) {
     current_position_ = pose;
   };
 

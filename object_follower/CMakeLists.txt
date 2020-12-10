@@ -39,6 +39,8 @@ include_directories(
    src/object_follower/GoalPublisherTf.cpp
    src/object_follower/GoalPublisherMoveBase.cpp
 
+   src/object_follower/ObjectFollowerFarm.cpp
+
    src/object_follower/Converter.cpp
    )
 

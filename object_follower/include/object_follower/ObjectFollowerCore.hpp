@@ -13,6 +13,7 @@ class ObjectFollowerCore {
 public:
   ObjectFollowerCore() = delete;
   virtual ~ObjectFollowerCore() = default;
+  ObjectFollowerCore(ObjectFollowerCore &&obj) = default;
 
   ObjectFollowerCore(std::unique_ptr<GoalChecker> goal_checker,
                      std::unique_ptr<GoalGenerator> goal_generator,
