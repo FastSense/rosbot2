@@ -3,7 +3,7 @@
 #include "geometry_msgs/TransformStamped.h"
 #include "ros/rate.h"
 
-constexpr float rate_value = 10;
+constexpr float rate_value = 10.0;
 
 class GoalPublisher {
 public:

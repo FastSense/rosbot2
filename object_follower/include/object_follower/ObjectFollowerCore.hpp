@@ -22,6 +22,7 @@ public:
   void start();
 
 private:
+  void follow();
   void sleep() const;
 
   bool enableFollowingCb(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res);

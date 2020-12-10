@@ -16,16 +16,10 @@ ObjectFollowerCore::ObjectFollowerCore(std::unique_ptr<GoalChecker> goal_checker
   setParams();
 }
 
-void ObjectFollowerCore::sleep() const { goal_publisher_->rate_.sleep(); }
-
 void ObjectFollowerCore::start() {
   while (ros::ok()) {
     try {
-      geometry_msgs::TransformStamped pose;
-      pose = goal_generator_->lookupTransform();
-      goal_generator_->evalGoal(pose);
-      if (goal_checker_->updatePoseIfConsiderable(pose))
-        goal_publisher_->sendGoal(pose);
+      follow();
     } catch (...) {
       exceptionFilter();
     }
@@ -34,6 +28,17 @@ void ObjectFollowerCore::start() {
     sleep();
   }
 }
+
+void ObjectFollowerCore::follow() {
+  geometry_msgs::TransformStamped pose;
+
+  pose = goal_generator_->lookupTransform();
+  goal_generator_->evalGoal(pose);
+  if (goal_checker_->updatePoseIfConsiderable(pose))
+    goal_publisher_->sendGoal(pose);
+}
+
+void ObjectFollowerCore::sleep() const { goal_publisher_->rate_.sleep(); }
 
 bool ObjectFollowerCore::enableFollowingCb(std_srvs::SetBool::Request &req,
                                            std_srvs::SetBool::Response &res) {

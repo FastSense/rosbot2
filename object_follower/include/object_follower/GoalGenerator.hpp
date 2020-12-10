@@ -3,7 +3,7 @@
 #include "geometry_msgs/TransformStamped.h"
 #include "tf2_ros/transform_listener.h"
 
-constexpr double tf_wait_value = 1;
+constexpr double tf_wait_value = 1.0;
 
 class GoalGenerator {
 public:
