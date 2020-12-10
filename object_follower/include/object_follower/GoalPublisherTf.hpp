@@ -2,7 +2,6 @@
 
 #include "GoalPublisher.hpp"
 #include <tf2_ros/transform_broadcaster.h>
-#include "geometry_msgs/PoseStamped.h"
 
 class GoalPublisherTf : public GoalPublisher {
 public:

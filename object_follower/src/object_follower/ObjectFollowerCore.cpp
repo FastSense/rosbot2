@@ -1,4 +1,9 @@
 #include "ObjectFollowerCore.hpp"
+
+#include "GoalChecker.hpp"
+#include "GoalGenerator.hpp"
+#include "GoalPublisher.hpp"
+
 #include <memory>
 
 const inline std::string SERVICE_NAME = "enable_following";

@@ -1,11 +1,14 @@
 #include "GoalChecker.hpp"
 #include "Converter.hpp"
+#include <ros/console.h>
 
 bool GoalChecker::updatePoseIfConsiderable(const geometry_msgs::TransformStamped &pose) {
-  if (!current_position_.has_value()) {
+  if (not current_position_.has_value()) {
     current_position_ = pose;
     return true;
+    ROS_INFO("Init Position set");
   }
+
   bool state = false;
   if ((state = isGoalConsiderable(pose))) {
     setCurrentPosition(pose);

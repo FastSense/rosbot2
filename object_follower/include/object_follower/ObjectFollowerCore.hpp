@@ -1,14 +1,13 @@
 #pragma once
 
-#include "geometry_msgs/TransformStamped.h"
 #include <memory>
 #include <ros/ros.h>
 #include <ros/service_server.h>
 #include <std_srvs/SetBool.h>
 
-#include "GoalChecker.hpp"
-#include "GoalGenerator.hpp"
-#include "GoalPublisher.hpp"
+class GoalChecker;
+class GoalGenerator;
+class GoalPublisher;
 
 class ObjectFollowerCore {
 public:
@@ -33,7 +32,7 @@ private:
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
 
-  bool following_enabled_;
+  bool following_enabled_ = true;
   ros::ServiceServer service_enable_following_;
 
   std::unique_ptr<GoalChecker> goal_checker_;

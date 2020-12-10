@@ -5,7 +5,7 @@ void GoalGeneratorBaselink2D::evalGoal(geometry_msgs::TransformStamped &pose) {
   geometry_msgs::Vector3 &translation = pose.transform.translation;
   geometry_msgs::Quaternion &rotation = pose.transform.rotation;
 
-  auto rpy = Converter::getRPYfromQuaternion(pose.transform.rotation);
+  auto rpy = Converter::getRPYfromQuaternion(rotation);
 
   setGoalTranslation(translation, rpy);
   setGoalRotation(rotation, rpy);

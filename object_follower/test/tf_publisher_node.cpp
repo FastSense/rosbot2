@@ -88,7 +88,7 @@ protected:
 
   std::string base_frame_ = "map";
   std::string object_frame_ = "object";
-  tf2::Vector3 current_position_ = {0, 0, 0};
+  tf2::Vector3 current_position_ = {0, 1, 0};
 
   ros::Rate rate_ = ros::Rate(NODE_RATE);
 
