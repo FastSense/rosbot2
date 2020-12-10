@@ -35,7 +35,7 @@ private:
       pos_x_value = x_min_ + x_increment_ * i;
       angle_value = min_angle_ + angle_increment_ * j;
 
-      ROS_INFO_THROTTLE(5, "Iteration %d. Pose x: %f, angle: %f", i, pos_x_value, angle_value);
+      /* ROS_INFO_THROTTLE(5, "Iteration %d. Pose x: %f, angle: %f", i, pos_x_value, angle_value); */
       current_position_.setX(pos_x_value);
       iterateBroadcating(current_position_, angle_value);
       rate_.sleep();
@@ -86,9 +86,9 @@ protected:
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
 
-  std::string base_frame_ = "map";
+  std::string base_frame_ = "base_link";
   std::string object_frame_ = "object";
-  tf2::Vector3 current_position_ = {0, 1, 0};
+  tf2::Vector3 current_position_ = {0, 0.3, 0};
 
   ros::Rate rate_ = ros::Rate(NODE_RATE);
 

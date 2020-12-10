@@ -22,10 +22,8 @@ void GoalGeneratorBaselink2D::setGoalRotation(geometry_msgs::Quaternion &rotatio
 
 void GoalGeneratorBaselink2D::setGoalTranslation(geometry_msgs::Vector3 &pt, RPY rpy) const {
   const double &r = goal_dist_from_obj_;
-  double angle;
-  angle = rpy.yaw;
 
-  pt.x = pt.x + r * cos(angle);
-  pt.y = pt.y + r * sin(angle);
+  pt.x = pt.x + r * cos(rpy.yaw);
+  pt.y = pt.y + r * sin(rpy.yaw);
   pt.z = 0;
 }

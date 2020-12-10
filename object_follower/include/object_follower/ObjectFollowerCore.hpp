@@ -11,7 +11,7 @@ class GoalPublisher;
 
 class ObjectFollowerCore {
 public:
-  ObjectFollowerCore() = default;
+  ObjectFollowerCore() = delete;
   virtual ~ObjectFollowerCore() = default;
 
   ObjectFollowerCore(std::unique_ptr<GoalChecker> goal_checker,
@@ -26,7 +26,7 @@ private:
 
   bool enableFollowingCb(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res);
   void setParams();
-  void exceptionFilter() const;
+  static void exceptionFilter();
 
 private:
   ros::NodeHandle nh_;

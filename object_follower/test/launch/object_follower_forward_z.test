@@ -1,7 +1,0 @@
-<launch>
-  <node pkg="object_follower" type="test_tf_publisher_node" name="object_follower_test_z" output="screen">
-    <param name="is_x_forward" type="bool" value="false"/>
-  </node>
-
-  <test test-name="object_follower_test" pkg="object_follower" type="object_follower_test" />
-</launch>

@@ -12,6 +12,7 @@ void GoalGeneratorNearest2D::evalGoal(geometry_msgs::TransformStamped &pose) {
 
   translation.x = translation.x - r * cos(alpha);
   translation.y = translation.y - r * sin(alpha);
+  translation.z = 0;
 
   Converter::setQuaternionRotation(rotation, RPY{0, 0, alpha});
 }

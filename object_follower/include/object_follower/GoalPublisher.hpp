@@ -12,6 +12,5 @@ public:
   virtual void sendGoal(geometry_msgs::TransformStamped &pose) = 0;
 
 public:
-  std::string base_frame_;
   ros::Rate rate_;
 };

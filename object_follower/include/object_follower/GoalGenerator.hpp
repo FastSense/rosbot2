@@ -16,6 +16,7 @@ public:
 public:
   std::string object_frame_;
   std::string base_frame_;
+
   double goal_dist_from_obj_;
 
 private:

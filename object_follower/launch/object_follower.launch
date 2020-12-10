@@ -1,0 +1,14 @@
+<launch>
+  <node pkg="object_follower" type="object_follower_tf_node" name="object_follower" output="screen">
+
+    <param name="base_frame" value="base_link"/>
+    <param name="object_frame" value="object"/>
+
+    <param name="range_diff_to_set_new_pose" value="0.15"/>
+    <param name="yaw_diff_to_set_new_pose" value="10"/>
+    <param name="goal_dist_from_obj" value="0.5"/>
+
+    <param name="generator_type" value="base_link_2d"/>
+    <param name="publisher_type" value="tf"/>
+  </node>
+</launch>

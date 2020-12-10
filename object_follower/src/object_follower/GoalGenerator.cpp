@@ -5,9 +5,7 @@ GoalGenerator::GoalGenerator() {
 }
 
 geometry_msgs::TransformStamped GoalGenerator::lookupTransform() {
-  static ros::Time tf_oldness;
-
-  tf_oldness = ros::Time(ros::Time::now());
+  ros::Time tf_oldness = ros::Time::now();
   geometry_msgs::TransformStamped tf_pose;
   tf_pose = tf_buffer_.lookupTransform(base_frame_, object_frame_, tf_oldness, tf_wait_);
   return tf_pose;

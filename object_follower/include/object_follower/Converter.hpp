@@ -1,6 +1,6 @@
 #pragma once
-
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <move_base_msgs/MoveBaseGoal.h>
 
 struct RPY {
   double roll;
@@ -20,6 +20,9 @@ public:
 
   static PoseTf convertToTfPair(const geometry_msgs::TransformStamped &pose);
   static RPY getRPYfromQuaternion(const geometry_msgs::Quaternion &rotation);
-  static void rotateQuaternion(geometry_msgs::Quaternion &q, const RPY &rot); 
-  static void setQuaternionRotation(geometry_msgs::Quaternion &q, const RPY &rot); 
+  static move_base_msgs::MoveBaseGoal tfToMoveBaseGoal(const geometry_msgs::TransformStamped &pose);
+
+  static void rotateQuaternion(geometry_msgs::Quaternion &q, const RPY &rot);
+  static void setQuaternionRotation(geometry_msgs::Quaternion &q, const RPY &rot);
 };
+

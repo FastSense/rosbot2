@@ -37,15 +37,13 @@ include_directories(
    src/object_follower/GoalGeneratorBaselink2D.cpp
    src/object_follower/GoalGeneratorNearest2D.cpp
    src/object_follower/GoalPublisherTf.cpp
+   src/object_follower/GoalPublisherMoveBase.cpp
 
    src/object_follower/Converter.cpp
    )
 
 add_executable(object_follower_tf_node src/object_follower/ObjectFollowerMain.cpp )
-# add_executable(object_follower_move_base_node src/object_follower/objf_move_base_main.cpp )
-
 add_dependencies(object_follower_tf_node ${PROJECT_NAME}_gencfg)
-# add_dependencies(object_follower_move_base_node ${PROJECT_NAME}_gencfg)
 
 target_link_libraries(object_follower_tf_node
   object_follower_lib
@@ -106,19 +104,3 @@ add_executable(test_tf_publisher_node test/tf_publisher_node.cpp)
 target_link_libraries(test_tf_publisher_node
   ${catkin_LIBRARIES}
 )
-
-add_rostest_gtest(object_follower_test_x test/launch/object_follower_forward_x.test test/object_follower_test.cpp)
-add_rostest_gtest(object_follower_test_z test/launch/object_follower_forward_z.test test/object_follower_test.cpp)
-
-target_link_libraries(object_follower_test_x
-  object_follower_lib
-  ${catkin_LIBRARIES}
-)
-
-target_link_libraries(object_follower_test_z
-  object_follower_lib
-  ${catkin_LIBRARIES}
-)
-
-add_dependencies(object_follower_test_x ${PROJECT_NAME}_gencfg)
-add_dependencies(object_follower_test_z ${PROJECT_NAME}_gencfg)
