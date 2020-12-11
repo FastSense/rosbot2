@@ -9,6 +9,6 @@
     <param name="goal_dist_from_obj" value="0.5"/>
 
     <param name="generator_type" value="nearest_2d"/>
-    <param name="publisher_type" value="move_base"/>
+    <param name="publisher_type" value="tf"/>
   </node>
 </launch>

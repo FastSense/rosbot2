@@ -1,13 +1,19 @@
-#include "ObjectFollowerFarm.hpp"
+#include "ObjectFollowerFactory.hpp"
 #include "ros/init.h"
-#include "ros/node_handle.h"
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "object_follower");
-  ObjectFollowerFarm farm;
-  farm.setParams();
-  auto node = farm.makeFollower();
+  ObjectFollowerFactory factory;
+
+  factory.setParams();
+  auto node = factory.makeFollower();
+
+  if (not node.has_value()) {
+    ROS_ERROR("Shutting down Object Follower Node");
+    ros::shutdown();
+    return 1;
+  }
 
   ROS_INFO("Object Follower Start Working");
-  node.start();
+  node->start();
 }

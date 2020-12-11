@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <ros/ros.h>
 
-
 /// @brief Test Fixture
 class ObjectFollowerTest : public ::testing::Test {
 protected:

@@ -16,20 +16,24 @@
 
 using namespace std::string_view_literals;
 
-class ObjectFollowerFarm {
+class ObjectFollowerFactory {
 public:
-  ObjectFollowerFarm();
+  ObjectFollowerFactory();
 
   static std::unique_ptr<GoalGenerator> makeGenerator(std::string_view type);
   static std::unique_ptr<GoalPublisher> makePublisher(std::string_view type);
   static std::unique_ptr<GoalChecker> makeChecker(std::string_view type);
 
-  ObjectFollowerCore makeFollower(std::string_view generator_type, std::string_view publisher_type,
+  std::optional<ObjectFollowerCore> makeFollower(std::string_view generator_type, std::string_view publisher_type,
                                   std::string_view checker_type);
 
-  ObjectFollowerCore makeFollower();
-
+  std::optional<ObjectFollowerCore> makeFollower();
   void setParams();
+
+private:
+  static void printGeneratorMissingMessage(std::string_view generator);
+  static void printPublisherMissingMessage(std::string_view publisher);
+  static void printChekerMissingMessage(std::string_view checker);
 
 private:
   std::string current_generator_;

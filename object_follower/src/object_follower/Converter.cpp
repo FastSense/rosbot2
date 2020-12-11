@@ -2,13 +2,13 @@
 #include "tf2/convert.h"
 
 PoseTf Converter::convertToTfPair(const geometry_msgs::TransformStamped &pose) {
-  tf2::Vector3 t_tf;
+  tf2::Vector3 v_tf;
   tf2::Quaternion q_tf;
 
-  tf2::convert(pose.transform.translation, t_tf);
+  tf2::convert(pose.transform.translation, v_tf);
   tf2::convert(pose.transform.rotation, q_tf);
 
-  return PoseTf{t_tf, q_tf};
+  return PoseTf{v_tf, q_tf};
 }
 
 RPY Converter::getRPYfromQuaternion(const geometry_msgs::Quaternion &rotation) {
