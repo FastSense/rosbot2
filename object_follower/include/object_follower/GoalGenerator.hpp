@@ -5,6 +5,9 @@
 
 constexpr double TF_WAIT_VALUE = 1.0;
 
+/**
+ * @brief Abstract class represents algorithm for evaluating goal.
+ */
 class GoalGenerator {
 public:
   GoalGenerator();
@@ -17,6 +20,7 @@ public:
   std::string object_frame_;
   std::string base_frame_;
 
+  ///  desired distance between goal and object
   double goal_dist_from_obj_;
 
 private:

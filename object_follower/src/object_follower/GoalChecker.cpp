@@ -1,20 +1,11 @@
 #include "GoalChecker.hpp"
 #include "Converter.hpp"
 
-bool GoalChecker::updatePoseIfConsiderable(const geometry_msgs::TransformStamped &pose) {
+bool GoalChecker::isGoalConsiderable(const geometry_msgs::TransformStamped &pose) const {
   if (not current_position_.has_value()) {
-    current_position_ = pose;
     return true;
   }
 
-  bool state = false;
-  if ((state = isGoalConsiderable(pose))) {
-    setCurrentPosition(pose);
-  }
-  return state;
-}
-
-bool GoalChecker::isGoalConsiderable(const geometry_msgs::TransformStamped &pose) const {
   auto [new_position, new_quaternion] = Converter::convertToTfPair(pose);
   auto [old_position, old_quaternion] = Converter::convertToTfPair(current_position_.value());
 

@@ -3,18 +3,19 @@
 #include "geometry_msgs/TransformStamped.h"
 #include <optional>
 
+/**
+ * @brief Class that keeps current position state and checks if goal is considirable.
+ */
 class GoalChecker {
 public:
   GoalChecker() = default;
   virtual ~GoalChecker() = default;
 
-  bool updatePoseIfConsiderable(const geometry_msgs::TransformStamped &pose);
+  virtual bool isGoalConsiderable(const geometry_msgs::TransformStamped &pose) const;
 
   double angle_diff_to_set_new_pose_;
   double range_diff_to_set_new_pose_;
 
-private:
-  bool isGoalConsiderable(const geometry_msgs::TransformStamped &pose) const;
   void setCurrentPosition(const geometry_msgs::TransformStamped &pose) {
     current_position_ = pose;
   };

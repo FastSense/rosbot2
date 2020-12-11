@@ -13,6 +13,9 @@ struct PoseTf {
   tf2::Quaternion quaternion;
 };
 
+/**
+ * @brief Class consists convert fucntions with some rotational & translational functional modules on basic ros types.
+ */
 class Converter {
 public:
   Converter() = default;

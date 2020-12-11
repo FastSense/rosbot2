@@ -1,5 +1,6 @@
 #pragma once
 
+#include "geometry_msgs/TransformStamped.h"
 #include <memory>
 #include <ros/ros.h>
 #include <ros/service_server.h>
@@ -9,6 +10,10 @@ class GoalChecker;
 class GoalGenerator;
 class GoalPublisher;
 
+/**
+ * @brief Class unites GoalPublisher GoalChecker and GoalGenerator components and provides
+ * functional for combined work of them and following to object 
+ */
 class ObjectFollowerCore {
 public:
   ObjectFollowerCore() = delete;

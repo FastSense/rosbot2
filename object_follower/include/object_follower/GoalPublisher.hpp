@@ -5,6 +5,9 @@
 
 constexpr float RATE_VALUE = 20.0;
 
+/**
+ * @brief Abstract class represents way for publishing goal.
+ */
 class GoalPublisher {
 public:
   GoalPublisher() : rate_(RATE_VALUE){};
