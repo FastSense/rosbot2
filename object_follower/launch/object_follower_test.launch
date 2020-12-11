@@ -1,5 +1,8 @@
 <launch>
   <include file="$(find object_follower)/launch/object_follower.launch"/>
+    <param name="generator_type" value="nearest_2d"/>
+    <param name="publisher_type" value="tf"/>
+    <param name="cheker_type" value="default"/>
 
   <node pkg="object_follower" type="test_tf_publisher_node" name="object_follower_test" output="screen">
     <param name="is_x_forward" type="bool" value="false"/>

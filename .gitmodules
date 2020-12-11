@@ -7,3 +7,6 @@
 [submodule "m-explore"]
 	path = m-explore
 	url = https://github.com/hrnr/m-explore.git
+[submodule "object_follower/doc/html"]
+	path = object_follower/doc/html
+	url = https://github.com/artofnothingness/object_follower_docs.git

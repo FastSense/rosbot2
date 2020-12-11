@@ -1,0 +1,21 @@
+actions: []
+authors: ''
+brief: ''
+bugtracker: ''
+depends:
+- dynamic_reconfigure
+- catkin
+- roscpp
+- actionlib
+- std_msgs
+- move_base_msgs
+- rospy
+- tf
+description: The object_follower package
+license: TODO
+maintainers: alex <alex@todo.todo>
+msgs: []
+package_type: package
+repo_url: ''
+srvs: []
+url: ''

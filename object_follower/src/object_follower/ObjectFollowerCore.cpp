@@ -62,7 +62,7 @@ void ObjectFollowerCore::setParams() {
   pnh_.param<double>("goal_dist_from_obj", goal_generator_->goal_dist_from_obj_, 0.5);
 
   pnh_.param<double>("range_diff_to_set_new_pose", goal_checker_->range_diff_to_set_new_pose_, 0.15);
-  pnh_.param<double>("yaw_diff_to_set_new_pose", goal_checker_->angle_diff_to_set_new_pose_, 10.0);
+  pnh_.param<double>("angle_diff_to_set_new_pose", goal_checker_->angle_diff_to_set_new_pose_, 10.0);
 }
 
 void ObjectFollowerCore::exceptionFilter() {

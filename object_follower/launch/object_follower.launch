@@ -5,10 +5,11 @@
     <param name="object_frame" value="object"/>
 
     <param name="range_diff_to_set_new_pose" value="0.15"/>
-    <param name="yaw_diff_to_set_new_pose" value="10"/>
+    <param name="angle_diff_to_set_new_pose" value="10"/>
     <param name="goal_dist_from_obj" value="0.5"/>
 
     <param name="generator_type" value="nearest_2d"/>
     <param name="publisher_type" value="tf"/>
+    <param name="cheker_type" value="default"/>
   </node>
 </launch>
