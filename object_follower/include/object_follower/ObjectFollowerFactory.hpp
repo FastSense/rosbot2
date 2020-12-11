@@ -27,11 +27,11 @@ public:
   static std::unique_ptr<GoalPublisher> makePublisher(std::string_view type);
   static std::unique_ptr<GoalChecker> makeChecker(std::string_view type);
 
-  std::optional<ObjectFollowerCore> makeFollower(std::string_view generator_type,
+  std::unique_ptr<ObjectFollowerCore> makeFollower(std::string_view generator_type,
                                                  std::string_view publisher_type,
                                                  std::string_view checker_type);
 
-  std::optional<ObjectFollowerCore> makeFollower();
+  std::unique_ptr<ObjectFollowerCore> makeFollower();
   void setParams();
 
 private:

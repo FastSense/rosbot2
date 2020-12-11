@@ -18,6 +18,9 @@ ObjectFollowerCore::ObjectFollowerCore(std::unique_ptr<GoalChecker> goal_checker
   service_enable_following_ =
       pnh_.advertiseService(SERVICE_NAME, &ObjectFollowerCore::enableFollowingCb, this);
 
+  config_callback_ = boost::bind(&ObjectFollowerCore::dynamicConfigCb, this, _1, _2);
+  config_server_.setCallback(config_callback_);
+
   setParams();
 }
 
@@ -46,6 +49,13 @@ void ObjectFollowerCore::follow() {
     goal_publisher_->sendGoal(pose);
     goal_checker_->setCurrentPosition(pose);
   }
+}
+
+void ObjectFollowerCore::dynamicConfigCb(object_follower::FollowerParamsConfig &config,
+                                         uint32_t level) {
+  goal_generator_->object_frame_ = config.object_frame;
+  goal_generator_->goal_dist_from_obj_ = config.goal_dist_from_obj;
+  following_enabled_ = config.enable_following;
 }
 
 void ObjectFollowerCore::sleep() const { goal_publisher_->rate_.sleep(); }

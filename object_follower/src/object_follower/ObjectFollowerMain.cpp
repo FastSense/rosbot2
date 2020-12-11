@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
   factory.setParams();
   auto node = factory.makeFollower();
 
-  if (not node.has_value()) {
+  if (not node) {
     ROS_ERROR("Shutting down Object Follower Node");
     ros::shutdown();
     return 1;

@@ -36,23 +36,22 @@ std::unique_ptr<GoalChecker> ObjectFollowerFactory::makeChecker(std::string_view
   return checker;
 }
 
-std::optional<ObjectFollowerCore>
+std::unique_ptr<ObjectFollowerCore>
 ObjectFollowerFactory::makeFollower(std::string_view checker_type, std::string_view publisher_type,
                                     std::string_view generator_type) {
-  std::optional<ObjectFollowerCore> follower;
 
   auto generator = makeGenerator(generator_type);
   auto publisher = makePublisher(publisher_type);
   auto checker = makeChecker(checker_type);
 
   if (generator && publisher && checker)
-    follower.emplace(
-        ObjectFollowerCore(std::move(checker), std::move(generator), std::move(publisher)));
+    return std::make_unique<ObjectFollowerCore>(std::move(checker), std::move(generator),
+                                                std::move(publisher));
 
-  return follower;
+  return nullptr;
 }
 
-std::optional<ObjectFollowerCore> ObjectFollowerFactory::makeFollower() {
+std::unique_ptr<ObjectFollowerCore> ObjectFollowerFactory::makeFollower() {
   return makeFollower(current_checker_, curren_publisher_, current_generator_);
 }
 
