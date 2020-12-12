@@ -47,8 +47,6 @@ include_directories(
 add_executable(object_follower_tf_node src/object_follower/ObjectFollowerMain.cpp )
 add_dependencies(object_follower_tf_node ${PROJECT_NAME}_gencfg)
 
-# add_dependencies(ArucoStart ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#                  ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(object_follower_tf_node
   object_follower_lib

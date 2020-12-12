@@ -24,6 +24,7 @@ class ObjectFollowerCore {
 public:
   ObjectFollowerCore() = delete;
   virtual ~ObjectFollowerCore() = default;
+  ObjectFollowerCore(ObjectFollowerCore &&obj) = default;
 
   ObjectFollowerCore(std::unique_ptr<GoalChecker> goal_checker,
                      std::unique_ptr<GoalGenerator> goal_generator,
@@ -48,7 +49,7 @@ private:
   bool following_enabled_ = true;
   ros::ServiceServer service_enable_following_;
 
-  DynamicServer config_server_;
+  std::unique_ptr<DynamicServer> config_server_;
   DynamicCallback config_callback_;
 
   std::unique_ptr<GoalChecker> goal_checker_;

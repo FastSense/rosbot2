@@ -18,8 +18,11 @@ ObjectFollowerCore::ObjectFollowerCore(std::unique_ptr<GoalChecker> goal_checker
   service_enable_following_ =
       pnh_.advertiseService(SERVICE_NAME, &ObjectFollowerCore::enableFollowingCb, this);
 
-  config_callback_ = boost::bind(&ObjectFollowerCore::dynamicConfigCb, this, _1, _2);
-  config_server_.setCallback(config_callback_);
+  config_callback_ = std::bind(&ObjectFollowerCore::dynamicConfigCb, this, std::placeholders::_1,
+                               std::placeholders::_2);
+
+  config_server_ = std::make_unique<DynamicServer>();
+  config_server_->setCallback(std::move(config_callback_));
 
   setParams();
 }
