@@ -18,7 +18,7 @@ using DynamicCallback =
     dynamic_reconfigure::Server<object_follower::FollowerParamsConfig>::CallbackType;
 /**
  * @brief Class unites GoalPublisher GoalChecker and GoalGenerator components and provides
- * functional for combined work of them and following to object
+ * functional for combined work of them in following algorithm
  */
 class ObjectFollowerCore {
 public:

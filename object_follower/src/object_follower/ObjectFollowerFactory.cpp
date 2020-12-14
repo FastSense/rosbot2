@@ -4,9 +4,9 @@ ObjectFollowerFactory::ObjectFollowerFactory() : pnh_("~") {}
 
 std::unique_ptr<GoalGenerator> ObjectFollowerFactory::makeGenerator(std::string_view type) {
   std::unique_ptr<GoalGenerator> generator;
-  if (type == generator_types[0])
+  if (type == generator_types_[0])
     generator = std::make_unique<GoalGeneratorNearest2D>();
-  else if (type == generator_types[1])
+  else if (type == generator_types_[1])
     generator = std::make_unique<GoalGeneratorBaselink2D>();
   else
     printGeneratorMissingMessage(type);
@@ -16,9 +16,9 @@ std::unique_ptr<GoalGenerator> ObjectFollowerFactory::makeGenerator(std::string_
 
 std::unique_ptr<GoalPublisher> ObjectFollowerFactory::makePublisher(std::string_view type) {
   std::unique_ptr<GoalPublisher> publisher;
-  if (type == publisher_types[0])
+  if (type == publisher_types_[0])
     publisher = std::make_unique<GoalPublisherTf>();
-  else if (type == publisher_types[1])
+  else if (type == publisher_types_[1])
     publisher = std::make_unique<GoalPublisherMoveBase>();
   else
     printPublisherMissingMessage(type);
@@ -28,7 +28,7 @@ std::unique_ptr<GoalPublisher> ObjectFollowerFactory::makePublisher(std::string_
 
 std::unique_ptr<GoalChecker> ObjectFollowerFactory::makeChecker(std::string_view type) {
   std::unique_ptr<GoalChecker> checker;
-  if (type == checker_types[0])
+  if (type == checker_types_[0])
     checker = std::make_unique<GoalChecker>();
   else
     printChekerMissingMessage(type);
@@ -57,33 +57,33 @@ std::optional<ObjectFollowerCore> ObjectFollowerFactory::makeFollower() {
   return makeFollower(current_checker_, curren_publisher_, current_generator_);
 }
 
-void ObjectFollowerFactory::printGeneratorMissingMessage(std::string_view generator) {
+void ObjectFollowerFactory::printGeneratorMissingMessage(std::string_view type) {
   std::string generators_string;
-  for (const auto &gen_type : generator_types) {
+  for (const auto &gen_type : generator_types_) {
     generators_string += gen_type;
     generators_string += " ";
   }
   ROS_ERROR("Wrong generator type: %s. You should choose one of the following : %s",
-            generator.data(), generators_string.c_str());
+            type.data(), generators_string.c_str());
 }
 
-void ObjectFollowerFactory::printPublisherMissingMessage(std::string_view publisher) {
+void ObjectFollowerFactory::printPublisherMissingMessage(std::string_view type) {
   std::string publishers_string;
-  for (const auto &pub_type : publisher_types) {
+  for (const auto &pub_type : publisher_types_) {
     publishers_string += pub_type;
     publishers_string += " ";
   }
   ROS_ERROR("Wrong publisher type: %s. You should choose one of the following : %s",
-            publisher.data(), publishers_string.c_str());
+            type.data(), publishers_string.c_str());
 }
 
-void ObjectFollowerFactory::printChekerMissingMessage(std::string_view checker) {
+void ObjectFollowerFactory::printChekerMissingMessage(std::string_view type) {
   std::string checkers_string;
-  for (const auto &chk_type : checker_types) {
+  for (const auto &chk_type : checker_types_) {
     checkers_string += chk_type;
     checkers_string += " ";
   }
-  ROS_ERROR("Wrong cheker type: %s. You should choose one of the following : %s", checker.data(),
+  ROS_ERROR("Wrong cheker type: %s. You should choose one of the following : %s", type.data(),
             checkers_string.data());
 }
 

@@ -27,7 +27,7 @@ public:
   static std::unique_ptr<GoalPublisher> makePublisher(std::string_view type);
   static std::unique_ptr<GoalChecker> makeChecker(std::string_view type);
 
-  std::optional<ObjectFollowerCore> makeFollower(std::string_view generator_type,
+  static std::optional<ObjectFollowerCore> makeFollower(std::string_view generator_type,
                                                  std::string_view publisher_type,
                                                  std::string_view checker_type);
 
@@ -35,9 +35,9 @@ public:
   void setParams();
 
 private:
-  static void printGeneratorMissingMessage(std::string_view generator);
-  static void printPublisherMissingMessage(std::string_view publisher);
-  static void printChekerMissingMessage(std::string_view checker);
+  static void printGeneratorMissingMessage(std::string_view type);
+  static void printPublisherMissingMessage(std::string_view type);
+  static void printChekerMissingMessage(std::string_view type);
 
 private:
   std::string current_generator_;
@@ -46,17 +46,17 @@ private:
 
   ros::NodeHandle pnh_;
 
-  constexpr static std::array generator_types = {
+  constexpr static std::array generator_types_ = {
       "nearest_2d"sv,
       "base_link_2d"sv,
   };
 
-  constexpr static std::array publisher_types = {
+  constexpr static std::array publisher_types_ = {
       "tf"sv,
       "move_base"sv,
   };
 
-  constexpr static std::array checker_types = {
+  constexpr static std::array checker_types_ = {
       "default"sv,
   };
 };

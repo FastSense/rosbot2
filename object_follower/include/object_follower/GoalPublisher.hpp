@@ -6,7 +6,7 @@
 constexpr float RATE_VALUE = 20.0;
 
 /**
- * @brief Abstract class represents way for publishing goal.
+ * @brief Abstract class represents publishing goal algorithm.
  */
 class GoalPublisher {
 public:

@@ -8,7 +8,7 @@ using MoveBaseGoal = move_base_msgs::MoveBaseGoal;
 using MoveBaseClient = actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>;
 
 /**
- * @brief Implementation of publisher being able for sending goals to move_base.
+ * @brief Implementation of publisher being able of sending goals to move_base.
  */
 class GoalPublisherMoveBase : public GoalPublisher {
 public:

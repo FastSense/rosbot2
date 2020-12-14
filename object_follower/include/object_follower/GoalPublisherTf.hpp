@@ -4,7 +4,7 @@
 #include <tf2_ros/transform_broadcaster.h>
 
 /**
- * @brief Implementation of publisher being able for sending goal tf; 
+ * @brief Implementation of publisher being able of sending goal tf; 
  */
 class GoalPublisherTf : public GoalPublisher {
 public:
