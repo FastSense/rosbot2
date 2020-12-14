@@ -1,0 +1,31 @@
+<launch>
+	<arg name="serial_no_camera"                default="818312071030"/>
+	<arg name="camera_image_topic"              default="/d435_front/color/image_raw"/>
+	<arg name="camera_info_topic_name"          default="/d435_front/color/camera_info"/>
+	<arg name="img_topic_name"                  default="/object_detector/rgb/image_raw"/>
+	<arg name="img_topic_out"                   default="/object_detector/front"/>
+	<arg name="circle_raduis"                   default="0.5"/>
+	<arg name="QR_topic_name"                   default="/object_detector/qr_pose"/>
+	<arg name="camera_type"                     default="front"/>
+	<arg name="mode"                            default="qr"/>
+	<arg name="QR_code_side_size"               default="0.3"/>
+	<arg name="logo_side_size"                  default="0.3"/>
+
+  <include file="$(find fastsense_px4)/launch/d435.launch" >
+  	<arg name="serial_no_camera_front"          value="$(arg serial_no_camera)" />
+  </include>
+
+  <node pkg="marker_detector" name="object_detector" type="object_detector.py" output="screen">
+    <param name="camera_image_topic" 			value="$(arg camera_image_topic)" />
+	<param name="camera_info_topic_name"		value="$(arg camera_info_topic_name)" />
+	<param name="img_topic_name"				value="$(arg img_topic_name)" />
+	<param name="img_topic_out"					value="$(arg img_topic_out)" />
+	<param name="circle_raduis"					value="$(arg circle_raduis)" />
+	<param name="QR_topic_name"					value="$(arg QR_topic_name)" />
+	<param name="camera_type"					value="$(arg camera_type)" />
+	<param name="mode"							value="$(arg mode)" />
+	<param name="QR_code_side_size"				value="$(arg QR_code_side_size)" />
+	<param name="logo_side_size"				value="$(arg logo_side_size)" />
+  </node>
+  
+</launch>

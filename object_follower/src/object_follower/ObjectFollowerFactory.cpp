@@ -36,24 +36,22 @@ std::unique_ptr<GoalChecker> ObjectFollowerFactory::makeChecker(std::string_view
   return checker;
 }
 
-std::optional<ObjectFollowerCore>
+std::unique_ptr<ObjectFollowerCore>
 ObjectFollowerFactory::makeFollower(std::string_view checker_type, std::string_view publisher_type,
                                     std::string_view generator_type) {
-
-  std::optional<ObjectFollowerCore> follower;
 
   auto generator = makeGenerator(generator_type);
   auto publisher = makePublisher(publisher_type);
   auto checker = makeChecker(checker_type);
 
   if (generator && publisher && checker)
-    follower.emplace(
-        ObjectFollowerCore(std::move(checker), std::move(generator), std::move(publisher)));
+    return std::make_unique<ObjectFollowerCore>(std::move(checker), std::move(generator),
+                                                std::move(publisher));
 
-  return follower;
+  return nullptr;
 }
 
-std::optional<ObjectFollowerCore> ObjectFollowerFactory::makeFollower() {
+std::unique_ptr<ObjectFollowerCore> ObjectFollowerFactory::makeFollower() {
   return makeFollower(current_checker_, curren_publisher_, current_generator_);
 }
 
@@ -63,8 +61,8 @@ void ObjectFollowerFactory::printGeneratorMissingMessage(std::string_view type) 
     generators_string += gen_type;
     generators_string += " ";
   }
-  ROS_ERROR("Wrong generator type: %s. You should choose one of the following : %s",
-            type.data(), generators_string.c_str());
+  ROS_ERROR("Wrong generator type: %s. You should choose one of the following : %s", type.data(),
+            generators_string.c_str());
 }
 
 void ObjectFollowerFactory::printPublisherMissingMessage(std::string_view type) {
@@ -73,8 +71,8 @@ void ObjectFollowerFactory::printPublisherMissingMessage(std::string_view type) 
     publishers_string += pub_type;
     publishers_string += " ";
   }
-  ROS_ERROR("Wrong publisher type: %s. You should choose one of the following : %s",
-            type.data(), publishers_string.c_str());
+  ROS_ERROR("Wrong publisher type: %s. You should choose one of the following : %s", type.data(),
+            publishers_string.c_str());
 }
 
 void ObjectFollowerFactory::printChekerMissingMessage(std::string_view type) {
