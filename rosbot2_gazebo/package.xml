@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>rosbot_gazebo</name>
+  <name>rosbot2_gazebo</name>
   <version>0.0.0</version>
   <description>The rosbot_gazebo package</description>
 
