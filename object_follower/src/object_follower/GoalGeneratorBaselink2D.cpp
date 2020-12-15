@@ -1,7 +1,8 @@
 #include "GoalGeneratorBaselink2D.hpp"
 #include "Converter.hpp"
 
-void GoalGeneratorBaselink2D::evalGoal(geometry_msgs::TransformStamped &pose) {
+geometry_msgs::TransformStamped GoalGeneratorBaselink2D::evalGoal() {
+  auto pose = lookupTransform(map_frame_, object_frame_);
   geometry_msgs::Vector3 &translation = pose.transform.translation;
   geometry_msgs::Quaternion &rotation = pose.transform.rotation;
 
@@ -9,6 +10,8 @@ void GoalGeneratorBaselink2D::evalGoal(geometry_msgs::TransformStamped &pose) {
 
   setGoalTranslation(translation, rpy);
   setGoalRotation(rotation, rpy);
+
+  return pose;
 }
 
 void GoalGeneratorBaselink2D::setGoalRotation(geometry_msgs::Quaternion &rotation, RPY rpy) const {

@@ -12,11 +12,12 @@ class GoalGenerator {
 public:
   GoalGenerator();
   virtual ~GoalGenerator() = default;
-  virtual void evalGoal(geometry_msgs::TransformStamped &pose) = 0;
+  virtual geometry_msgs::TransformStamped evalGoal() = 0;
 
-  geometry_msgs::TransformStamped lookupTransform();
+  geometry_msgs::TransformStamped lookupTransform(std::string source_frame, std::string target_frame);
 
 public:
+  std::string map_frame_;
   std::string object_frame_;
   std::string base_frame_;
 

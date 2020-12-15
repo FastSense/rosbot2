@@ -53,7 +53,13 @@ Converter::tfToMoveBaseGoal(const geometry_msgs::TransformStamped &pose) {
   converted_pose.target_pose.header.frame_id = pose.header.frame_id;
   converted_pose.target_pose.header.seq = pose.header.seq;
   converted_pose.target_pose.header.stamp = pose.header.stamp;
-  
 
   return converted_pose;
+}
+
+tf2::Stamped<tf2::Transform>
+Converter::convertToTfPose(const geometry_msgs::TransformStamped &pose) {
+  tf2::Stamped<tf2::Transform> pose_tf;
+  tf2::convert(pose, pose_tf);
+  return pose_tf;
 }

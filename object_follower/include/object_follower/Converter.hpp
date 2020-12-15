@@ -1,6 +1,6 @@
 #pragma once
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <move_base_msgs/MoveBaseGoal.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 struct RPY {
   double roll;
@@ -14,7 +14,8 @@ struct PoseTf {
 };
 
 /**
- * @brief Class consists convert fucntions with some rotational & translational functional modules on basic ros types.
+ * @brief Class consists convert fucntions with some rotational & translational functional modules
+ * on basic ros types.
  */
 class Converter {
 public:
@@ -27,5 +28,6 @@ public:
 
   static void rotateQuaternion(geometry_msgs::Quaternion &q, const RPY &rot);
   static void setQuaternionRotation(geometry_msgs::Quaternion &q, const RPY &rot);
+  static tf2::Stamped<tf2::Transform> convertToTfPose(const geometry_msgs::TransformStamped &pose);
 };
 

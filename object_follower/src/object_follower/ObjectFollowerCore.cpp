@@ -41,10 +41,7 @@ void ObjectFollowerCore::follow() {
   if (not following_enabled_)
     return;
 
-  geometry_msgs::TransformStamped pose;
-
-  pose = goal_generator_->lookupTransform();
-  goal_generator_->evalGoal(pose);
+  auto pose = goal_generator_->evalGoal();
   if (goal_checker_->isGoalConsiderable(pose)) {
     goal_publisher_->sendGoal(pose);
     goal_checker_->setCurrentPosition(pose);
@@ -69,8 +66,10 @@ bool ObjectFollowerCore::enableFollowingCb(std_srvs::SetBool::Request &req,
 }
 
 void ObjectFollowerCore::setParams() {
-  pnh_.param<std::string>("base_frame", goal_generator_->base_frame_, "map");
+  pnh_.param<std::string>("base_frame", goal_generator_->base_frame_, "base_link");
+  pnh_.param<std::string>("map_frame", goal_generator_->map_frame_, "map");
   pnh_.param<std::string>("object_frame", goal_generator_->object_frame_, "object");
+
   pnh_.param<double>("goal_dist_from_obj", goal_generator_->goal_dist_from_obj_, 0.5);
 
   pnh_.param<double>("range_diff_to_set_new_pose", goal_checker_->range_diff_to_set_new_pose_,

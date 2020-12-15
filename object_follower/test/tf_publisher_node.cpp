@@ -86,7 +86,7 @@ protected:
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
 
-  std::string base_frame_ = "base_link";
+  std::string base_frame_ = "map";
   std::string object_frame_ = "object";
   tf2::Vector3 current_position_ = {0, 0.3, 0};
 

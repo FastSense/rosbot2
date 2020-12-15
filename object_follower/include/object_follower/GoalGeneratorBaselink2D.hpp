@@ -12,7 +12,7 @@ public:
   GoalGeneratorBaselink2D() = default;
   virtual ~GoalGeneratorBaselink2D() = default;
 
-  void evalGoal(geometry_msgs::TransformStamped &pose) final;
+  geometry_msgs::TransformStamped evalGoal() final;
 
 private:
   void setGoalRotation(geometry_msgs::Quaternion &rotation, RPY rpy) const;
