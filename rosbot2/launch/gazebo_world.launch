@@ -1,3 +1,3 @@
 <launch>
-    <include file="$(find rosbot_gazebo)/launch/qr_world.launch"/>
+    <include file="$(find rosbot2_gazebo)/launch/qr_world.launch"/>
 </launch>
