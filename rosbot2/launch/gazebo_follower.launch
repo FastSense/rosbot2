@@ -1,7 +1,0 @@
-<launch>
-
-  <include file="$(find rosbot2)/launch/gazebo_navigation.launch"/>
-  <include file="$(find object_detector)/launch/rosbot2.launch"/>
-  <include file="$(find object_follower)/launch/object_follower_move_base.launch"/>
-
-</launch>

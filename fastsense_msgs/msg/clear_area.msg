@@ -1,2 +1,0 @@
-geometry_msgs/Point UpLeftBound
-geometry_msgs/Point DownRightBound
