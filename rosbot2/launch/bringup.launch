@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <include file="$(find fs_sensors)/launch/camera.launch"/>
+  <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+
+  <include file="$(find rosbot2)/launch/robot_state_publisher.launch"/>
+  <include file="$(find rosbot2)/launch/rosserial_bridge.launch"/>
+  <include file="$(find rosbot2)/launch/ekf.launch"/>
+
+  <include file="$(find rosbot_ekf)/launch/message_conversion.launch"/>
+</launch>

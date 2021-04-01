@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find rosbot2)/launch/slam.launch"/>
+  <include file="$(find object_detector)/launch/nn_detector.launch"/>
+  <include file="$(find object_follower)/launch/object_follower.launch"/>
+</launch>
