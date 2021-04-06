@@ -3,15 +3,16 @@
   <arg name="planner_name" default="teb_local_planner/TebLocalPlannerROS"/>       
 
   <node pkg="move_base" type="move_base" name="move_base" output="log">
-    <param name="controller_frequency" value="25.0"/>
-    <param name="planner_frequency" value="10.0"/>
+    <param name="controller_frequency" value="20.0"/>
+    <param name="planner_frequency" value="3.0"/>
+
     <param name="base_local_planner" value="$(arg planner_name)"/>
 
-    <rosparam file="$(find rosbot2)/config/$(arg planner)/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find rosbot2)/config/$(arg planner)/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find rosbot2)/config/$(arg planner)/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find rosbot2)/config/$(arg planner)/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find rosbot2)/config/costmap/common.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find rosbot2)/config/costmap/common.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find rosbot2)/config/costmap/local.yaml" command="load" />
+    <rosparam file="$(find rosbot2)/config/costmap/global.yaml" command="load" />
 
-    <rosparam file="$(find rosbot2)/config/$(arg planner)/local_planner_params.yaml" command="load" />
+    <rosparam file="$(find rosbot2)/config/planners/$(arg planner).yaml" command="load" />
   </node>
 </launch>

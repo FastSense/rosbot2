@@ -1,0 +1,6 @@
+planners:
+  - name: 'NavfnROS'
+    type: 'navfn/NavfnROS'
+
+planner_patience: 5.0
+planner_frequency: 10.0

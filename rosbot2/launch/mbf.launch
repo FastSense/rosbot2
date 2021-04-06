@@ -1,0 +1,30 @@
+<launch>
+  <arg name="local_planner" default="teb"/>       
+
+  <arg name="local_planner_name" default="TebLocalPlannerROS"/>       
+  <arg name="global_planner_name" default="NavfnROS"/>       
+
+  <node name="move_base_flex" pkg="mbf_costmap_nav" type="mbf_costmap_nav" required="true" output="screen">
+    <param name="controller_frequency" value="25.0"/>
+    <param name="planner_frequency" value="10.0"/>
+
+    <rosparam file="$(find rosbot2)/config/costmap/common.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find rosbot2)/config/costmap/common.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find rosbot2)/config/costmap/local.yaml" command="load" />
+    <rosparam file="$(find rosbot2)/config/costmap/global.yaml" command="load" />
+
+    <rosparam file="$(find rosbot2)/config/mbf/planners.yaml" command="load" />
+    <rosparam file="$(find rosbot2)/config/mbf/controllers.yaml" command="load" />
+    <rosparam file="$(find rosbot2)/config/mbf/recovery_behaviors.yaml" command="load" />
+
+    <rosparam file="$(find rosbot2)/config/planners/$(arg local_planner).yaml" command="load" />
+  </node>
+
+  <node name="move_base_legacy_relay" pkg="mbf_costmap_nav" type="move_base_legacy_relay.py">
+    <param name="controller_frequency" value="25.0"/>
+    <param name="planner_frequency" value="10.0"/>
+
+    <param name="base_local_planner" value="$(arg local_planner_name)"/>
+    <param name="base_global_planner" value="$(arg global_planner_name)"/>
+  </node>
+</launch>

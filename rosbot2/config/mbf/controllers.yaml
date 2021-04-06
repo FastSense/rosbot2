@@ -1,0 +1,4 @@
+controllers:
+   - name: 'TebLocalPlannerROS'
+     type: 'teb_local_planner/TebLocalPlannerROS'
+

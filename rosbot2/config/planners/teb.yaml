@@ -11,7 +11,7 @@ TebLocalPlannerROS:
  global_plan_overwrite_orientation: True
  allow_init_with_backwards_motion: True
 
- max_global_plan_lookahead_dist: 4.0
+ max_global_plan_lookahead_dist: 1.0
  global_plan_viapoint_sep: -1
  force_reinit_new_goal_dist: 0.1
  force_reinit_new_goal_angular: 0.1
@@ -37,7 +37,7 @@ TebLocalPlannerROS:
  # ********************************************************************
 
  footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
-   type: "polygon"
+   type: "circular"
    radius: 0.2 # for type "circular"
    line_start: [0.0, 0.0] # for type "line"
    line_end: [0.4, 0.0] # for type "line"
@@ -56,7 +56,7 @@ TebLocalPlannerROS:
     
  # Obstacles
     
- min_obstacle_dist: 0.10 # This value must also include our robot's expansion, since footprint_model is set to "line".
+ min_obstacle_dist: 0.07 # This value must also include our robot's expansion, since footprint_model is set to "line".
  inflation_dist: 1.0
  include_costmap_obstacles: True
  costmap_obstacles_behind_robot_dist: 1.0
@@ -86,11 +86,11 @@ TebLocalPlannerROS:
  weight_kinematics_turning_radius: 1 
  weight_optimaltime: 1 # must be > 0
  weight_shortest_path: 0
- weight_obstacle: 100
+ weight_obstacle: 1000
  weight_inflation: 0.2
  weight_dynamic_obstacle: 10 # not in use yet
  weight_dynamic_obstacle_inflation: 0.5
- weight_viapoint: 5 
+ weight_viapoint: 2 
  weight_adapt_factor: 2
 
  # Homotopy Class Planner

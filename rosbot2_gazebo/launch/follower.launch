@@ -1,5 +1,5 @@
 <launch>
   <include file="$(find rosbot2_gazebo)/launch/navigation.launch"/>
   <include file="$(find object_detector)/launch/qr_detector.launch"/>
-  <include file="$(find object_follower)/launch/object_follower_move_base.launch"/>
+  <include file="$(find object_follower)/launch/object_follower.launch"/>
 </launch>

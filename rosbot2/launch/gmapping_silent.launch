@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="rosbot2" type="gmapping_silent.sh" name='gmapping_node' output='log' />
+</launch>
