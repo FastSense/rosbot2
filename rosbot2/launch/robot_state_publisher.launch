@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <param name="robot_description" command="xacro '$(find rosbot_description)/urdf/rosbot.xacro'"/>
+  
+  <arg name="update_rate"             default="10"/>
+
+  <param name="robot_description" command="xacro '$(find rosbot_description)/urdf/rosbot.xacro' update_rate:=$(arg update_rate)"/>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>

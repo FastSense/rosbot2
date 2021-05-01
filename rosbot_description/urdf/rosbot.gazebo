@@ -4,7 +4,7 @@
   <gazebo>
     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
       <robotNamespace>${namespace}/</robotNamespace>
-      <updateRate>30.0</updateRate>
+      <updateRate>${update_rate}</updateRate>
       <robotBaseFrame>${namespace}/base_link</robotBaseFrame>
       <wheelSeparation>0.20</wheelSeparation>
       <wheelDiameter>0.08</wheelDiameter>
